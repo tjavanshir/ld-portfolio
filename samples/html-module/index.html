@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The ADDIE Model — Interactive Learning Module</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/module.css" />
+</head>
+<body>
+
+<div class="module-shell">
+
+  <!-- Header -->
+  <header class="module-header">
+    <div class="module-title">Instructional Design Fundamentals · Module 1</div>
+    <div class="module-name">The ADDIE Model: A Framework for Instructional Design</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-label">
+        <span>Your progress</span>
+        <span id="progressText">0% complete</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </header>
+
+  <!-- Slides -->
+  <main class="slide-area">
+
+    <!-- Slide 1: Introduction -->
+    <div class="slide active" id="slide-0">
+      <span class="slide-badge">Welcome</span>
+      <h1>The ADDIE Model</h1>
+      <p>ADDIE is the most widely used framework in instructional design. It provides a systematic, repeatable process for creating effective learning experiences — whether you're building a 5-minute compliance module or a semester-long university course.</p>
+
+      <div class="slide-intro-grid">
+        <div class="intro-obj-card">
+          <h4>Learning Objectives</h4>
+          <ul class="obj-list">
+            <li>Name and describe each phase of ADDIE</li>
+            <li>Identify key activities within each phase</li>
+            <li>Explain how ADDIE supports iterative design</li>
+            <li>Apply the framework to a real project scenario</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="time-card">
+            <div>
+              <div class="big-num">15</div>
+            </div>
+            <div>
+              <p>Estimated completion time</p>
+              <strong style="font-size:1.1rem;">minutes</strong>
+            </div>
+          </div>
+          <div class="intro-obj-card" style="background:rgba(13,148,136,0.06);border-left:3px solid #0D9488;padding:16px;">
+            <h4 style="color:#0D9488;">Includes</h4>
+            <p style="font-size:0.85rem;color:#475569;margin-top:6px;">5 phases explained · Tabbed content · Reflection prompts · 3-question knowledge check</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Analysis -->
+    <div class="slide" id="slide-1">
+      <span class="slide-badge">Phase 1 of 5</span>
+      <h2>Analysis — Understanding the Problem</h2>
+      <p>Before designing a single slide or writing a single objective, you must understand the problem you're solving. The Analysis phase prevents you from building the wrong solution — even if you build it brilliantly.</p>
+
+      <div class="phase-card analyse">
+        <h3>🔍 What happens in Analysis?</h3>
+        <p>You investigate the performance gap, understand your audience, clarify constraints, and define what success looks like.</p>
+        <div class="phase-activities">
+          <span class="activity-chip">Needs Analysis</span>
+          <span class="activity-chip">Audience Profile</span>
+          <span class="activity-chip">Task Analysis</span>
+          <span class="activity-chip">Gap Analysis</span>
+          <span class="activity-chip">Stakeholder Interviews</span>
+          <span class="activity-chip">Resource Inventory</span>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab-headers">
+          <button class="tab-btn active" data-tab="tab-a1">Key Questions</button>
+          <button class="tab-btn" data-tab="tab-a2">Outputs</button>
+          <button class="tab-btn" data-tab="tab-a3">Common Mistakes</button>
+        </div>
+        <div class="tab-panel active" id="tab-a1">
+          <ul class="obj-list" style="list-style:none;">
+            <li>What performance problem are we solving?</li>
+            <li>Who are the learners — experience, role, prior knowledge?</li>
+            <li>Is training actually the right solution?</li>
+            <li>What are the constraints (budget, time, tech)?</li>
+            <li>How will we measure success?</li>
+          </ul>
+        </div>
+        <div class="tab-panel" id="tab-a2">
+          <ul class="obj-list" style="list-style:none;">
+            <li>Needs analysis report</li>
+            <li>Learner persona / audience profile</li>
+            <li>Project scope and constraints document</li>
+            <li>Recommended solution (may not be training)</li>
+          </ul>
+        </div>
+        <div class="tab-panel" id="tab-a3">
+          <ul class="obj-list" style="list-style:none;">
+            <li>Skipping analysis and jumping straight to design</li>
+            <li>Assuming training will fix a motivation problem</li>
+            <li>Not consulting the actual target learners</li>
+            <li>Ignoring technical and accessibility constraints</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Design -->
+    <div class="slide" id="slide-2">
+      <span class="slide-badge">Phase 2 of 5</span>
+      <h2>Design — Blueprinting the Solution</h2>
+      <p>Design is where analysis findings become a concrete plan. You're not building content yet — you're creating the blueprint that will guide development.</p>
+
+      <div class="phase-card design">
+        <h3>✏️ What happens in Design?</h3>
+        <p>You write learning objectives, sequence content, design assessments, and create storyboards or wireframes before a single piece of content is built.</p>
+        <div class="phase-activities">
+          <span class="activity-chip">Learning Objectives</span>
+          <span class="activity-chip">Content Outline</span>
+          <span class="activity-chip">Storyboarding</span>
+          <span class="activity-chip">Assessment Design</span>
+          <span class="activity-chip">Style Guide</span>
+          <span class="activity-chip">Prototype</span>
+        </div>
+      </div>
+
+      <div class="reflect-box">
+        <h4>💡 Reflection Prompt</h4>
+        <p>Think about a training you've experienced that felt disorganised or irrelevant. What analysis or design step do you think was skipped? How could a structured Design phase have improved it?</p>
+      </div>
+
+      <div class="phase-card design" style="margin-top:16px;">
+        <h3>Writing Strong Learning Objectives</h3>
+        <p>Use Bloom's Taxonomy action verbs. A strong objective includes: <strong>Audience + Behaviour + Condition + Degree</strong> (the ABCD model).</p>
+        <p style="margin-top:10px;font-style:italic;color:#0D9488;">Example: "By the end of this module, the learner will be able to <u>identify</u> the five phases of ADDIE and <u>describe</u> one key activity within each phase."</p>
+      </div>
+    </div>
+
+    <!-- Slide 4: Develop, Implement, Evaluate (overview) -->
+    <div class="slide" id="slide-3">
+      <span class="slide-badge">Phases 3 · 4 · 5</span>
+      <h2>Develop · Implement · Evaluate</h2>
+      <p>With analysis and design complete, you move into building, deploying, and measuring your learning solution.</p>
+
+      <div class="phase-card develop">
+        <h3>🛠️ Develop</h3>
+        <p>Build the actual content — slides, videos, interactions, assessments. Use your storyboard as a guide. Conduct pilot testing and gather SME review before launch.</p>
+        <div class="phase-activities">
+          <span class="activity-chip">Content Creation</span>
+          <span class="activity-chip">Authoring Tool Build</span>
+          <span class="activity-chip">Media Production</span>
+          <span class="activity-chip">Alpha / Beta Review</span>
+        </div>
+      </div>
+
+      <div class="phase-card implement">
+        <h3>🚀 Implement</h3>
+        <p>Deploy to your LMS or delivery platform. Train facilitators if needed. Enrol learners. Monitor for technical issues and early completion data.</p>
+        <div class="phase-activities">
+          <span class="activity-chip">LMS Upload</span>
+          <span class="activity-chip">Facilitator Training</span>
+          <span class="activity-chip">Learner Onboarding</span>
+          <span class="activity-chip">Technical Testing</span>
+        </div>
+      </div>
+
+      <div class="phase-card evaluate">
+        <h3>📊 Evaluate</h3>
+        <p>Use Kirkpatrick's Four Levels — Reaction, Learning, Behaviour, Results — to measure training effectiveness and identify improvements.</p>
+        <div class="phase-activities">
+          <span class="activity-chip">Level 1: Reaction</span>
+          <span class="activity-chip">Level 2: Learning</span>
+          <span class="activity-chip">Level 3: Behaviour</span>
+          <span class="activity-chip">Level 4: Results</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Knowledge Check -->
+    <div class="slide" id="slide-4">
+      <span class="slide-badge">Knowledge Check</span>
+      <h2>Check Your Understanding</h2>
+      <p>Answer the three questions below. Select an option, then click <strong>Check Answer</strong> to see feedback.</p>
+      <br>
+      <div id="quizContainer"></div>
+      <div class="score-panel" id="scorePanel">
+        <div class="score-circle">
+          <div class="score-num" id="scoreNum">0</div>
+          <div class="score-denom">/ 3</div>
+        </div>
+        <h3>Quiz Complete!</h3>
+        <p id="scoreMsg"></p>
+      </div>
+    </div>
+
+    <!-- Slide 6: Completion -->
+    <div class="slide" id="slide-5">
+      <div class="completion-wrap">
+        <div class="completion-icon">🎓</div>
+        <h2>Module Complete!</h2>
+        <p>You've completed <strong>The ADDIE Model: A Framework for Instructional Design</strong>. You can now name and describe all five phases and explain how they work together to create effective learning.</p>
+        <div class="completion-links">
+          <a href="../../index.html" class="comp-link primary">← Back to Portfolio</a>
+          <a href="#" onclick="window.location.reload()" class="comp-link outline">Restart Module</a>
+        </div>
+        <div style="margin-top:40px;padding:24px;background:#F1F5F9;border-radius:12px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto;">
+          <h4 style="color:#1E3A8A;margin-bottom:12px;">What's next?</h4>
+          <p style="font-size:0.9rem;color:#475569;">Explore more work samples in the portfolio — including the SCORM module on writing learning objectives and the Canvas course design showcase.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Navigation -->
+  <footer class="module-nav">
+    <span class="slide-counter" id="slideCounter">Slide 1 of 6</span>
+    <div class="nav-btns">
+      <button class="nav-btn prev" id="prevBtn" disabled>← Back</button>
+      <button class="nav-btn next" id="nextBtn">Next →</button>
+    </div>
+  </footer>
+
+</div>
+
+<script src="js/module.js"></script>
+</body>
+</html>
