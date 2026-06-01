@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moodle Course Design — Workplace Safety Induction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --moodle: #F98012; --moodle-dark: #C96700; --moodle-bg: #FFF6EE;
+      --dark: #333; --mid: #555; --light: #f4f6f8; --white: #fff;
+      --radius: 6px; --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#e8ecef;color:var(--dark)}
+    a{text-decoration:none;color:inherit}
+
+    /* Portfolio bar */
+    .portfolio-bar{background:#222;color:#fff;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem}
+    .portfolio-bar a{color:#aaa;display:flex;align-items:center;gap:6px}
+    .portfolio-bar a:hover{color:#fff}
+    .portfolio-bar strong{color:var(--moodle)}
+
+    /* Moodle top header */
+    .m-header{background:#fff;border-bottom:3px solid var(--moodle);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 6px rgba(0,0,0,0.07)}
+    .m-logo{display:flex;align-items:center;gap:10px}
+    .m-logo-mark{background:var(--moodle);color:#fff;font-weight:800;font-size:.9rem;padding:5px 10px;border-radius:5px;letter-spacing:.05em}
+    .m-logo-text{font-size:.85rem;color:#666}
+    .m-user{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#666}
+    .m-user-icon{width:32px;height:32px;border-radius:50%;background:var(--moodle);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+
+    /* Moodle breadcrumb */
+    .m-breadcrumb{background:var(--light);padding:10px 24px;font-size:.8rem;color:#778;border-bottom:1px solid #dde}
+    .m-breadcrumb span{color:var(--moodle)}
+
+    /* Layout */
+    .m-layout{display:grid;grid-template-columns:1fr 280px;gap:0;max-width:1200px;margin:0 auto;padding:24px 24px 40px}
+
+    /* Main course area */
+    .m-main{}
+
+    /* Course header */
+    .m-course-header{background:linear-gradient(135deg,#1a1a2e,#2d3a4a);color:#fff;border-radius:var(--radius);padding:28px;margin-bottom:20px}
+    .m-course-short{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+    .m-course-title{font-size:1.5rem;font-weight:700;margin-bottom:6px}
+    .m-course-summary{font-size:.88rem;opacity:.75;line-height:1.6}
+    .m-course-tags{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+    .m-tag{font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.85)}
+
+    /* Completion bar */
+    .m-completion-bar{background:#fff;border-radius:var(--radius);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
+    .m-comp-track{flex:1;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden}
+    .m-comp-fill{height:100%;background:var(--moodle);border-radius:4px}
+    .m-comp-text{font-size:.8rem;color:#666;white-space:nowrap}
+
+    /* Design note */
+    .m-design-note{background:var(--moodle-bg);border-left:4px solid var(--moodle);border-radius:0 var(--radius) var(--radius) 0;padding:14px 18px;margin-bottom:18px;font-size:.82rem;color:#7a3b00}
+    .m-design-note strong{display:block;margin-bottom:4px;color:var(--moodle-dark)}
+
+    /* Topics */
+    .m-topic{background:#fff;border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+    .m-topic-header{background:var(--light);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e0e4e8;cursor:pointer}
+    .m-topic-title{font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:10px}
+    .m-topic-num{background:var(--moodle);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0}
+    .m-topic-meta{font-size:.75rem;color:#889}
+    .m-topic-body{display:none;padding:4px 0}
+    .m-topic.open .m-topic-body{display:block}
+
+    /* Activity rows */
+    .m-activity{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid #f0f2f4;font-size:.85rem;color:var(--dark);cursor:pointer;transition:background .15s}
+    .m-activity:hover{background:#f8f9fa}
+    .m-activity:last-child{border-bottom:none}
+    .m-act-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+    .m-act-icon.page{background:#e8f4fd}
+    .m-act-icon.forum{background:#e8f8f4}
+    .m-act-icon.quiz{background:#fff3e0}
+    .m-act-icon.h5p{background:#f3e8ff}
+    .m-act-icon.assign{background:#fce4ec}
+    .m-act-icon.scorm{background:#e0f7fa}
+    .m-act-icon.video{background:#fbe9e7}
+    .m-act-body{flex:1}
+    .m-act-name{font-weight:500}
+    .m-act-type{font-size:.72rem;color:#889;margin-top:1px}
+    .m-act-badge{font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:4px;background:#e8f0ff;color:#1a3a8a}
+    .m-act-comp{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;flex-shrink:0}
+    .m-act-comp.done{background:var(--moodle);border-color:var(--moodle);display:flex;align-items:center;justify-content:center}
+    .m-act-comp.done::after{content:'✓';color:#fff;font-size:.6rem;font-weight:700}
+
+    /* Sidebar */
+    .m-sidebar{padding-left:20px}
+    .m-widget{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+    .m-widget-title{background:var(--moodle);color:#fff;padding:10px 16px;font-size:.82rem;font-weight:700;letter-spacing:.04em}
+    .m-widget-body{padding:14px 16px}
+    .m-widget-body p{font-size:.82rem;color:#556;line-height:1.7}
+    .m-widget-body ul{list-style:none;margin-top:8px}
+    .m-widget-body li{font-size:.82rem;color:#556;padding:5px 0;border-bottom:1px solid #f0f0f0;display:flex;gap:8px}
+    .m-widget-body li:last-child{border-bottom:none}
+    .m-widget-body li::before{content:'›';color:var(--moodle);font-weight:700}
+    .grade-row{display:flex;justify-content:space-between;padding:6px 0;font-size:.82rem;border-bottom:1px solid #f4f4f4}
+    .grade-row:last-child{border-bottom:none;font-weight:700;padding-top:10px}
+    .grade-pts{color:var(--moodle);font-weight:600}
+    .deadline-item{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f4f4f4;font-size:.8rem}
+    .deadline-item:last-child{border-bottom:none}
+    .d-date{color:var(--moodle);font-weight:700;flex-shrink:0;min-width:48px}
+
+    /* Quiz bank callout */
+    .quiz-bank-note{background:#e8f4fd;border-radius:var(--radius);padding:12px;font-size:.8rem;color:#1a5276;margin-top:10px}
+    .quiz-bank-note strong{display:block;margin-bottom:4px}
+
+    @media(max-width:760px){
+      .m-layout{grid-template-columns:1fr}
+      .m-sidebar{padding-left:0}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Portfolio bar -->
+<div class="portfolio-bar">
+  <a href="../../index.html">← Portfolio</a>
+  <span>Work Sample: <strong>Moodle Course Design</strong></span>
+  <span style="color:#aaa;font-size:.75rem;">Mockup / Design Showcase</span>
+</div>
+
+<!-- Moodle Header -->
+<div class="m-header">
+  <div class="m-logo">
+    <div class="m-logo-mark">M!</div>
+    <div class="m-logo-text">Demo Moodle Site</div>
+  </div>
+  <div class="m-user">
+    <div class="m-user-icon">JD</div>
+    <span>Jane Demo</span>
+  </div>
+</div>
+
+<!-- Breadcrumb -->
+<div class="m-breadcrumb">
+  Home › My courses › <span>WHS101 — Workplace Safety Induction</span>
+</div>
+
+<!-- Layout -->
+<div class="m-layout">
+
+  <!-- Main -->
+  <div class="m-main">
+
+    <!-- Course header -->
+    <div class="m-course-header">
+      <div class="m-course-short">WHS101 · Compliance Training · 2026</div>
+      <div class="m-course-title">Workplace Safety Induction</div>
+      <div class="m-course-summary">A mandatory induction program covering WHS legislation, hazard identification, emergency procedures, and incident reporting. Designed for all new employees in their first week.</div>
+      <div class="m-course-tags">
+        <span class="m-tag">Topic-based format</span>
+        <span class="m-tag">Completion tracking</span>
+        <span class="m-tag">Certificate on pass</span>
+        <span class="m-tag">Pass mark: 80%</span>
+      </div>
+    </div>
+
+    <!-- Completion bar -->
+    <div class="m-completion-bar">
+      <span style="font-size:.82rem;font-weight:600;color:#555;white-space:nowrap;">Your progress</span>
+      <div class="m-comp-track"><div class="m-comp-fill" style="width:25%"></div></div>
+      <span class="m-comp-text">3 of 12 activities complete</span>
+    </div>
+
+    <!-- Design note -->
+    <div class="m-design-note">
+      <strong>Instructional Design Note</strong>
+      Topic-based format used to mirror job-role groupings. Completion tracking enforces sequence: each topic requires 100% completion before unlocking the next. H5P used for branching scenarios (no authoring tool licence needed). Quiz drawn from randomised question bank to reduce cheating and enable reattempts fairly. Certificate plugin generates PDF on passing the final quiz.
+    </div>
+
+    <!-- Topic 1 — Introduction (open) -->
+    <div class="m-topic open">
+      <div class="m-topic-header">
+        <div class="m-topic-title">
+          <div class="m-topic-num">1</div>
+          Welcome &amp; WHS Overview
+        </div>
+        <span class="m-topic-meta">3 activities · All required</span>
+      </div>
+      <div class="m-topic-body">
+        <div class="m-activity">
+          <div class="m-act-icon page">📄</div>
+          <div class="m-act-body">
+            <div class="m-act-name">Welcome from the Safety Manager</div>
+            <div class="m-act-type">Page</div>
+          </div>
+          <div class="m-act-comp done"></div>
+        </div>
+        <div class="m-activity">
+          <div class="m-act-icon video">🎬</div>
+          <div class="m-act-body">
+            <div class="m-act-name">Introduction to WHS Legislation (Video, 6 min)</div>
+            <div class="m-act-type">Video Resource</div>
+          </div>
+          <div class="m-act-comp done"></div>
+        </div>
+        <div class="m-activity">
+          <div class="m-act-icon forum">💬</div>
+          <div class="m-act-body">
+            <div class="m-act-name">Safety Experience Forum — Introduce Yourself</div>
+            <div class="m-act-type">Forum · Must post to proceed</div>
+          </div>
+          <div class="m-act-comp done"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Topic 2 — Hazard ID (open) -->
+    <div class="m-topic open">
+      <div class="m-topic-header">
+        <div class="m-topic-title">
+          <div class="m-topic-num" style="background:#0D9488">2</div>
+          Hazard Identification &amp; Risk Assessment
+        </div>
+        <span class="m-topic-meta">4 activities · Requires Topic 1 complete</span>
+      </div>
+      <div class="m-topic-body">
+        <div class="m-activity">
+          <div class="m-act-icon page">📄</div>
+          <div class="m-act-body">
+            <div class="m-act-name">The Hierarchy of Controls</div>
+            <div class="m-act-type">Page with embedded infographic</div>
+          </div>
+          <div class="m-act-comp"></div>
+        </div>
+        <div class="m-activity">
+          <div class="m-act-icon h5p">🎮</div>
+          <div class="m-act-body">
+            <div class="m-act-name">Spot the Hazard — Branching Scenario (H5P)</div>
+            <div class="m-act-type">H5P · Interactive Scenario · Must complete</div>
+          </div>
+          <span class="m-act-badge">H5P</span>
+          <div class="m-act-comp"></div>
+        </div>
+        <div class="m-activity">
+          <div class="m-act-icon assign">📝</div>
+          <div class="m-act-body">
+            <div class="m-act-name">Hazard Report Form — Practice Activity</div>
+            <div class="m-act-type">Assignment · File upload · Not graded</div>
+          </div>
+          <div class="m-act-comp"></div>
+        </div>
+        <div class="m-activity">
+          <div class="m-act-icon quiz">❓</div>
+          <div class="m-act-body">
+            <div class="m-act-name">Section Quiz — Hazard ID (10 questions)</div>
+            <div class="m-act-type">Quiz · Randomised from bank · 2 attempts · Pass: 70%</div>
+          </div>
+          <span class="m-act-badge">Graded</span>
+          <div class="m-act-comp"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Topics 3-5 collapsed -->
+    <div class="m-topic">
+      <div class="m-topic-header">
+        <div class="m-topic-title">
+          <div class="m-topic-num" style="background:#7C3AED">3</div>
+          Emergency Procedures &amp; Evacuation
+        </div>
+        <span class="m-topic-meta">4 activities · 🔒 Locked</span>
+      </div>
+      <div class="m-topic-body"></div>
+    </div>
+    <div class="m-topic">
+      <div class="m-topic-header">
+        <div class="m-topic-title">
+          <div class="m-topic-num" style="background:#DC2626">4</div>
+          PPE Selection &amp; Use
+        </div>
+        <span class="m-topic-meta">3 activities · 🔒 Locked</span>
+      </div>
+      <div class="m-topic-body"></div>
+    </div>
+    <div class="m-topic">
+      <div class="m-topic-header">
+        <div class="m-topic-title">
+          <div class="m-topic-num" style="background:#0F172A">5</div>
+          Final Assessment &amp; Certificate
+        </div>
+        <span class="m-topic-meta">Final quiz — 40 questions · Pass mark: 80% · 🔒 Locked</span>
+      </div>
+      <div class="m-topic-body"></div>
+    </div>
+
+    <!-- Quiz bank note -->
+    <div class="quiz-bank-note">
+      <strong>Question Bank Structure (ID Design Note)</strong>
+      The final quiz draws randomly from a 120-question bank organised into 5 categories (1 per topic). Each attempt draws 8 questions per category = 40 questions total. This prevents rote memorisation and allows unlimited fair reattempts. All questions include specific feedback for wrong answers referencing the source page.
+    </div>
+
+  </div>
+
+  <!-- Sidebar -->
+  <div class="m-sidebar">
+
+    <div class="m-widget">
+      <div class="m-widget-title">ASSESSMENT &amp; GRADES</div>
+      <div class="m-widget-body">
+        <div class="grade-row"><span>Section Quiz 2</span><span class="grade-pts">— / 10</span></div>
+        <div class="grade-row"><span>Section Quiz 3</span><span class="grade-pts">— / 10</span></div>
+        <div class="grade-row"><span>Section Quiz 4</span><span class="grade-pts">— / 10</span></div>
+        <div class="grade-row"><span>Final Assessment</span><span class="grade-pts">— / 70</span></div>
+        <div class="grade-row"><span>Total</span><span class="grade-pts">— / 100</span></div>
+      </div>
+    </div>
+
+    <div class="m-widget">
+      <div class="m-widget-title">UPCOMING</div>
+      <div class="m-widget-body">
+        <div class="deadline-item">
+          <span class="d-date">7 Jun</span>
+          <span>Complete by end of first week (mandatory)</span>
+        </div>
+        <div class="deadline-item">
+          <span class="d-date">7 Jun</span>
+          <span>Certificate auto-issued on passing final quiz</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-widget">
+      <div class="m-widget-title">DESIGN FEATURES</div>
+      <div class="m-widget-body">
+        <ul>
+          <li>Restrict by completion to enforce sequence</li>
+          <li>H5P for interactive scenarios (free plugin)</li>
+          <li>Question bank with randomisation</li>
+          <li>Certificate plugin on course completion</li>
+          <li>Gradebook auto-calculates pass/fail</li>
+          <li>Mobile-responsive Boost theme</li>
+          <li>Accessibility: WCAG 2.1 AA compliant</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="m-widget">
+      <div class="m-widget-title">HELP &amp; SUPPORT</div>
+      <div class="m-widget-body">
+        <p>For technical issues contact the LMS administrator. For WHS questions, contact your direct supervisor or the Safety Team.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.m-topic-header').forEach(h => {
+  h.addEventListener('click', () => h.closest('.m-topic').classList.toggle('open'));
+});
+</script>
+</body>
+</html>
