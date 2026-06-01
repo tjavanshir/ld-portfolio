@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing Effective Learning Objectives — SCORM 1.2 Module</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/scorm.css" />
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- SCORM/Demo Banner -->
+  <div class="scorm-banner" id="scormBanner"></div>
+
+  <!-- Header -->
+  <header class="hdr">
+    <div class="hdr-meta">SCORM 1.2 Module · Instructional Design Series</div>
+    <div class="hdr-title">Writing Effective Learning Objectives</div>
+    <div class="hdr-sub">Using Bloom's Taxonomy to craft clear, measurable outcomes</div>
+    <div class="pb-wrap">
+      <div class="pb-lbl"><span>Your progress</span><span id="pText">0% complete</span></div>
+      <div class="pb-track"><div class="pb-fill" id="pFill" style="width:0%"></div></div>
+    </div>
+  </header>
+
+  <!-- Slides -->
+  <main class="slide-area">
+
+    <!-- Slide 1: Welcome -->
+    <div class="slide active">
+      <span class="badge">Welcome · SCORM 1.2 Module</span>
+      <h1>Writing Effective Learning Objectives</h1>
+      <p>Learning objectives are the foundation of every well-designed course. They define what learners will be able to do after instruction — and drive every design decision that follows.</p>
+
+      <div class="intro-grid">
+        <div class="info-card">
+          <h4>Learning Objectives</h4>
+          <ul class="obj-list">
+            <li>Explain why learning objectives matter to instructional design</li>
+            <li>Identify Bloom's Taxonomy levels and associated verbs</li>
+            <li>Apply the ABCD model to write strong objectives</li>
+            <li>Distinguish effective from ineffective objectives</li>
+          </ul>
+        </div>
+        <div class="scorm-badge-card">
+          <h4>Module Details</h4>
+          <ul>
+            <li>Duration: ~20 minutes</li>
+            <li>4-question graded quiz (pass mark: 70%)</li>
+            <li>SCORM 1.2 compliant — tracks to any LMS</li>
+            <li>Completion status reported on pass</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Why objectives matter -->
+    <div class="slide">
+      <span class="badge">Section 1 — Why Objectives Matter</span>
+      <h2>The Purpose of Learning Objectives</h2>
+      <p>A learning objective is not a course title or a topic description. It's a precise, measurable statement of what a learner will be able to <em>do</em> as a result of instruction.</p>
+
+      <div class="accordion">
+        <div class="accordion-item open">
+          <button class="accordion-btn">They guide design decisions <span class="icon">+</span></button>
+          <div class="accordion-body">
+            <p>Objectives determine content selection, sequence, instructional strategies, and assessment methods. If you can't link a piece of content back to an objective, it probably shouldn't be there.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">They set learner expectations <span class="icon">+</span></button>
+          <div class="accordion-body">
+            <p>When learners know exactly what they should be able to do by the end, they can focus their attention and self-monitor their progress. Clear objectives reduce anxiety and improve engagement.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">They enable meaningful assessment <span class="icon">+</span></button>
+          <div class="accordion-body">
+            <p>A well-written objective already contains the assessment criteria. If the objective says "demonstrate correct emergency shutdown procedure," you know exactly what the assessment must require.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">They justify training investment <span class="icon">+</span></button>
+          <div class="accordion-body">
+            <p>Measurable objectives allow organisations to evaluate training effectiveness against business outcomes — the basis of Kirkpatrick Level 4 and ROI evaluation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Bloom's Taxonomy -->
+    <div class="slide">
+      <span class="badge">Section 2 — Bloom's Taxonomy</span>
+      <h2>Bloom's Revised Taxonomy</h2>
+      <p>Bloom's Taxonomy (revised by Anderson &amp; Krathwohl, 2001) provides a hierarchy of cognitive skills to target in learning objectives — from simple recall to complex creation.</p>
+
+      <div class="tabs">
+        <div class="tab-heads">
+          <button class="tab-btn active" data-tab="t-remember">Remember</button>
+          <button class="tab-btn" data-tab="t-understand">Understand</button>
+          <button class="tab-btn" data-tab="t-apply">Apply</button>
+          <button class="tab-btn" data-tab="t-analyse">Analyse</button>
+          <button class="tab-btn" data-tab="t-evaluate">Evaluate</button>
+          <button class="tab-btn" data-tab="t-create">Create</button>
+        </div>
+        <div class="tab-panel active" id="t-remember">
+          <div class="content-card blue">
+            <h3>Level 1 — Remember</h3>
+            <p>Recall facts and basic concepts from memory.</p>
+            <ul class="bloom-list">
+              <li><strong>Verbs:</strong> define, list, recall, recognise, state, identify, name, repeat</li>
+              <li><strong>Example objective:</strong> "List the five phases of the ADDIE model."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-panel" id="t-understand">
+          <div class="content-card green">
+            <h3>Level 2 — Understand</h3>
+            <p>Explain ideas or concepts in own words.</p>
+            <ul class="bloom-list">
+              <li><strong>Verbs:</strong> explain, describe, summarise, paraphrase, classify, interpret</li>
+              <li><strong>Example objective:</strong> "Explain the difference between formative and summative assessment."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-panel" id="t-apply">
+          <div class="content-card amber">
+            <h3>Level 3 — Apply</h3>
+            <p>Use information in new situations.</p>
+            <ul class="bloom-list">
+              <li><strong>Verbs:</strong> use, demonstrate, implement, execute, solve, perform</li>
+              <li><strong>Example objective:</strong> "Demonstrate correct hand hygiene technique using the WHO 6-step method."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-panel" id="t-analyse">
+          <div class="content-card red">
+            <h3>Level 4 — Analyse</h3>
+            <p>Draw connections and break down information.</p>
+            <ul class="bloom-list">
+              <li><strong>Verbs:</strong> compare, differentiate, examine, organise, distinguish, attribute</li>
+              <li><strong>Example objective:</strong> "Compare SAM and ADDIE methodologies across three design criteria."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-panel" id="t-evaluate">
+          <div class="content-card blue">
+            <h3>Level 5 — Evaluate</h3>
+            <p>Justify decisions and make judgements.</p>
+            <ul class="bloom-list">
+              <li><strong>Verbs:</strong> judge, critique, justify, defend, assess, prioritise, recommend</li>
+              <li><strong>Example objective:</strong> "Justify the selection of synchronous vs asynchronous delivery for a given audience."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-panel" id="t-create">
+          <div class="content-card green">
+            <h3>Level 6 — Create</h3>
+            <p>Produce original work by combining elements.</p>
+            <ul class="bloom-list">
+              <li><strong>Verbs:</strong> design, develop, compose, construct, produce, plan, build</li>
+              <li><strong>Example objective:</strong> "Design a complete needs analysis plan for a new onboarding program."</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: ABCD Model -->
+    <div class="slide">
+      <span class="badge">Section 3 — The ABCD Model</span>
+      <h2>Writing with the ABCD Model</h2>
+      <p>The ABCD model gives every learning objective a consistent, complete structure. Each component adds clarity and makes the objective easier to assess.</p>
+
+      <div class="content-card green" style="margin-top:20px;">
+        <h3>A — Audience</h3>
+        <p>Who is the learner? Be specific: "new employees," "team leaders," "nursing students."</p>
+      </div>
+      <div class="content-card blue">
+        <h3>B — Behaviour</h3>
+        <p>What will they do? Use a measurable Bloom's Taxonomy verb. Avoid "understand" or "know."</p>
+      </div>
+      <div class="content-card amber">
+        <h3>C — Condition</h3>
+        <p>Under what circumstances? "Given a case study," "using the LMS," "without reference materials."</p>
+      </div>
+      <div class="content-card red">
+        <h3>D — Degree</h3>
+        <p>How well or how many? "with 90% accuracy," "within 3 minutes," "for all four scenarios."</p>
+      </div>
+
+      <div class="example-wrap" style="margin-top:20px;">
+        <div class="label">Before &amp; After Examples</div>
+        <div class="ex-bad"><span>❌</span><p>"Learners will understand workplace safety policies."</p></div>
+        <div class="ex-good"><span>✅</span><p>"By the end of this course, <u>new employees (A)</u> will be able to <u>identify (B)</u> the correct PPE for each of the five listed hazardous work areas, <u>without assistance (C)</u>, <u>with 100% accuracy (D)</u>."</p></div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Quiz -->
+    <div class="slide">
+      <span class="badge">Knowledge Check — Graded Quiz</span>
+      <h2>Test Your Knowledge</h2>
+      <p>Answer all four questions. You need <strong>70% or above</strong> to pass. Your score is reported to the LMS on completion.</p>
+      <br>
+      <div id="quizWrap"></div>
+      <div class="result-panel" id="resultPanel">
+        <h3>Quiz Complete</h3>
+        <div class="result-score"><span id="rScore">0</span>/<span id="rTotal">4</span> &nbsp;·&nbsp; <span id="rPct"></span></div>
+        <p style="font-size:1.1rem;font-weight:700;margin:8px 0;" id="rStatus"></p>
+        <p id="rMsg"></p>
+      </div>
+    </div>
+
+    <!-- Slide 6: Completion -->
+    <div class="slide">
+      <div class="comp-wrap">
+        <div class="comp-icon">🏅</div>
+        <h2>Module Complete!</h2>
+        <p>You've completed <strong>Writing Effective Learning Objectives</strong>. Your completion status and score have been reported to the LMS.</p>
+        <div class="comp-links">
+          <a href="../../index.html" class="comp-link pri">← Back to Portfolio</a>
+          <a href="#" onclick="window.location.reload()" class="comp-link out">Restart Module</a>
+        </div>
+        <div style="margin-top:36px;padding:20px;background:var(--lt);border-radius:12px;text-align:left;max-width:460px;margin-left:auto;margin-right:auto;">
+          <h4 style="color:var(--s);margin-bottom:10px;">SCORM Details</h4>
+          <ul style="list-style:none;font-size:.85rem;color:var(--md);">
+            <li>📦 Standard: SCORM 1.2</li>
+            <li>📄 Manifest: imsmanifest.xml included</li>
+            <li>📊 Tracks: score, completion status, session time, location</li>
+            <li>✅ Compatible: Moodle, Canvas, Blackboard, TalentLMS, SCORM Cloud</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Nav -->
+  <footer class="mod-nav">
+    <span class="s-ctr" id="sCounter">Slide 1 of 6</span>
+    <div class="nav-btns">
+      <button class="nb prev" id="bPrev" disabled>← Back</button>
+      <button class="nb next" id="bNext">Next →</button>
+    </div>
+  </footer>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/scorm.js"></script>
+</body>
+</html>
