@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="com.learncraft.learning-objectives" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                      http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+    <lom xmlns="http://ltsc.ieee.org/xsd/LOM">
+      <general>
+        <title><langstring xml:lang="en">Writing Effective Learning Objectives</langstring></title>
+        <description>
+          <langstring xml:lang="en">
+            A SCORM 1.2 compliant module teaching instructional designers how to write
+            clear, measurable learning objectives using Bloom's Taxonomy.
+          </langstring>
+        </description>
+        <keyword><langstring xml:lang="en">instructional design</langstring></keyword>
+        <keyword><langstring xml:lang="en">learning objectives</langstring></keyword>
+        <keyword><langstring xml:lang="en">bloom's taxonomy</langstring></keyword>
+      </general>
+      <lifecycle>
+        <version><langstring xml:lang="en">1.0</langstring></version>
+      </lifecycle>
+      <technical>
+        <format>text/html</format>
+      </technical>
+      <educational>
+        <learningresourcetype>
+          <source><langstring xml:lang="en">LOMv1.0</langstring></source>
+          <value><langstring xml:lang="en">Tutorial</langstring></value>
+        </learningresourcetype>
+        <typicallearningtime>
+          <datetime>PT20M</datetime>
+        </typicallearningtime>
+      </educational>
+    </lom>
+  </metadata>
+
+  <organizations default="learncraft_org">
+    <organization identifier="learncraft_org" structure="hierarchical">
+      <title>Writing Effective Learning Objectives</title>
+      <item identifier="item_001" identifierref="resource_001" isvisible="true">
+        <title>Writing Effective Learning Objectives</title>
+        <adlcp:masteryscore>70</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+
+  <resources>
+    <resource identifier="resource_001" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="css/scorm.css"/>
+      <file href="js/api.js"/>
+      <file href="js/scorm.js"/>
+    </resource>
+  </resources>
+
+</manifest>
