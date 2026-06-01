@@ -299,6 +299,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
 .sample-thumb.scorm { background: linear-gradient(135deg, #065F46, #0D9488); }
 .sample-thumb.canvas { background: linear-gradient(135deg, #7C2D12, #DC2626); }
 .sample-thumb.moodle { background: linear-gradient(135deg, #4C1D95, #7C3AED); }
+.sample-thumb.cae-cpd { background: linear-gradient(135deg, #0B1F3A, #1A3A6B); }
 
 .sample-label {
   position: absolute;
