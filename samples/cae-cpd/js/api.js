@@ -13,24 +13,52 @@ const SCORM = (() => {
 
   function findAPI(win) {
     let attempts = 0;
-    while (!win.API && win.parent && win.parent !== win && attempts < 7) {
-      win = win.parent;
-      attempts++;
+    while (attempts < 7) {
+      try { if (win.API) return win.API; } catch(e) {}
+      try { if (win.parent && win.parent !== win) { win = win.parent; attempts++; continue; } } catch(e) {}
+      break;
     }
-    return win.API || null;
+    try { if (window.top && window.top.API) return window.top.API; } catch(e) {}
+    try { if (window.opener && window.opener.API) return window.opener.API; } catch(e) {}
+    return null;
   }
 
   function init() {
     api = findAPI(window);
-    if (!api) {
-      standalone = true;
-      console.info('[SCORM] No LMS API found — running in standalone/demo mode.');
-      return true;
+    if (api) {
+      const result = api.LMSInitialize('');
+      initialized = result === 'true' || result === true;
+      if (initialized) {
+        console.info('[SCORM] LMS API connected.');
+      } else {
+        console.warn('[SCORM] LMSInitialize failed:', api.LMSGetLastError());
+      }
+      return initialized;
     }
-    const result = api.LMSInitialize('');
-    initialized = result === 'true' || result === true;
-    if (!initialized) console.warn('[SCORM] LMSInitialize failed:', api.LMSGetLastError());
-    return initialized;
+
+    /* Retry loop — SCORM Cloud popup launches attach the API after the SCO loads */
+    let retries = 0;
+    const maxRetries = 15;
+    const interval = setInterval(function () {
+      api = findAPI(window);
+      retries++;
+      if (api) {
+        clearInterval(interval);
+        const result = api.LMSInitialize('');
+        initialized = result === 'true' || result === true;
+        if (initialized) {
+          console.info('[SCORM] LMS API connected (retry ' + retries + ').');
+        } else {
+          console.warn('[SCORM] LMSInitialize failed on retry:', api.LMSGetLastError());
+        }
+      } else if (retries >= maxRetries) {
+        clearInterval(interval);
+        standalone = true;
+        console.info('[SCORM] No LMS API found after retries — running in standalone/demo mode.');
+      }
+    }, 200);
+
+    return true;
   }
 
   function setValue(element, value) {
