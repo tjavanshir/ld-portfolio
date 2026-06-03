@@ -2868,6 +2868,9 @@ function goToScreen(id){
   if(window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
   window.scrollTo({top:0, behavior:'smooth'});
   if(id === 'cert') refreshCertGate();
+  /* Seed quiz start times for FIB and match on first visit */
+  if((id === 'm4') && !_quizStartTimes['fib']) _quizStartTimes['fib'] = Date.now();
+  if((id === 'm5') && !_quizStartTimes['match']) _quizStartTimes['match'] = Date.now();
 }
 
 function completeModule(id){
@@ -2876,6 +2879,7 @@ function completeModule(id){
     var navItem = document.getElementById('nav-' + id);
     if(navItem) navItem.classList.add('completed');
     updateGlobalProgress();
+    if(typeof SCORM !== 'undefined') SCORM.setLocation(id);
   }
 }
 
@@ -2954,6 +2958,10 @@ function initQuiz(prefix, total){
     var block = document.getElementById(prefix + '-q' + i);
     if(block){ block.classList.toggle('active', i === 1); }
   }
+  /* Record timing baseline for this quiz */
+  var now = Date.now();
+  _quizStartTimes[prefix] = now;
+  _questionShownAt[prefix + '-1'] = now;
   renderCarouselNav(prefix, total);
 }
 
@@ -2993,6 +3001,9 @@ function carouselGoTo(prefix, n, total){
   document.getElementById(prefix + '-q' + state.current).classList.remove('active');
   state.current = n;
   document.getElementById(prefix + '-q' + n).classList.add('active');
+  /* Record first time this question is viewed (for latency) */
+  var key = prefix + '-' + n;
+  if(!_questionShownAt[key]) _questionShownAt[key] = Date.now();
   renderCarouselNav(prefix, total);
 }
 function carouselPrev(prefix, total){
@@ -3072,6 +3083,31 @@ function submitQuiz(prefix, total){
   var pct = Math.round((correctCount / total) * 100);
   var pass = pct >= 80;
   quizScores[prefix] = pct;
+
+  /* ── SCORM interactions + objective ── */
+  if(typeof SCORM !== 'undefined'){
+    for(var si = 1; si <= total; si++){
+      var sPicked = state.selections[si];
+      if(!sPicked) continue;
+      var sBlock = document.getElementById(prefix + '-q' + si);
+      var isTFQ = sBlock && sBlock.querySelector('.tf-btn');
+      var sType = isTFQ ? 'true-false' : 'choice';
+      var sResponse = sPicked.textContent.trim();
+      var sCorrectEl = sBlock ? sBlock.querySelector('[data-correct="true"]') : null;
+      var sCorrect = sCorrectEl ? sCorrectEl.textContent.trim() : '';
+      var sResult = (sPicked.getAttribute('data-correct') === 'true') ? 'correct' : 'wrong';
+      SCORM.logInteraction(
+        prefix + '_q' + si,
+        sType,
+        sResponse,
+        sCorrect,
+        sResult,
+        _scormLatency(prefix, si)
+      );
+    }
+    var objId = _objectiveMap[prefix] || (prefix + '_quiz');
+    SCORM.logObjective(objId, pass ? 'passed' : 'failed', pct, 0, 100);
+  }
 
   var submitBtn = document.getElementById(prefix + '-submit');
   if(submitBtn){ var row = submitBtn.closest('.quiz-submit-row'); if(row) row.style.display = 'none'; }
@@ -3595,6 +3631,39 @@ function submitFillBlank(){
   var pass = pct >= 80;
   quizScores['fib'] = pct;
 
+  /* ── SCORM interactions + objective ── */
+  if(typeof SCORM !== 'undefined'){
+    var fibSubmitTime = Date.now();
+    var fibStart = _quizStartTimes['fib'] || _scormStart;
+    var fibTotalSecs = Math.max(1, Math.round((fibSubmitTime - fibStart) / 1000));
+    var fibQCount = 0;
+    for(var fq = 1; fq <= totalQuestions; fq++){
+      var fSpec = fibAnswers[String(fq)];
+      var fBlanks = document.querySelectorAll('.fib-input[data-q="' + fq + '"]');
+      var fResponses = [];
+      var fCorrects = [];
+      var fAllCorrect = true;
+      fBlanks.forEach(function(inp){
+        var key = inp.getAttribute('data-blank');
+        var spec = fSpec[key];
+        var ok = spec ? spec.check(inp.value || '') : false;
+        if(!ok) fAllCorrect = false;
+        fResponses.push(inp.value.trim() || '(blank)');
+        fCorrects.push(spec ? spec.display : '');
+      });
+      SCORM.logInteraction(
+        'm4_fib_q' + fq,
+        'fill-in',
+        fResponses.join(', '),
+        fCorrects.join(', '),
+        fAllCorrect ? 'correct' : 'wrong',
+        Math.max(1, Math.round(fibTotalSecs / totalQuestions))
+      );
+      fibQCount++;
+    }
+    SCORM.logObjective(_objectiveMap['fib'], pass ? 'passed' : 'failed', pct, 0, 100);
+  }
+
   /* Hide submit row */
   var submitBtn = document.getElementById('fib-check');
   if(submitBtn){
@@ -3780,6 +3849,32 @@ function submitMatch(){
   var pass = pct >= 80;
   quizScores['match'] = pct;
 
+  /* ── SCORM interactions + objective ── */
+  if(typeof SCORM !== 'undefined'){
+    var matchStart = _quizStartTimes['match'] || _scormStart;
+    var matchLatency = Math.max(1, Math.round((Date.now() - matchStart) / 1000 / matchTotalPairs));
+    for(var mlk in matchState.pairs){
+      var mlNum = mlk.split('-')[1];
+      var mrk = matchState.pairs[mlk];
+      var mlEl = document.querySelector('#match-left .match-item[data-id="' + mlk + '"]');
+      var mrEl = document.querySelector('#match-right .match-item[data-id="' + mrk + '"]');
+      var mrCorrectEl = document.querySelector('#match-right .match-item[data-id="mr-' + mlNum + '"]');
+      var mlText = mlEl ? mlEl.textContent.trim().substring(0, 80) : mlk;
+      var mrText = mrEl ? mrEl.textContent.trim().substring(0, 80) : mrk;
+      var mrCorrectText = mrCorrectEl ? mrCorrectEl.textContent.trim().substring(0, 80) : ('mr-' + mlNum);
+      var mPairCorrect = (mlNum === mrk.split('-')[1]);
+      SCORM.logInteraction(
+        'm5_match_pair_' + mlNum,
+        'matching',
+        mlText + '[.]' + mrText,
+        mlText + '[.]' + mrCorrectText,
+        mPairCorrect ? 'correct' : 'wrong',
+        matchLatency
+      );
+    }
+    SCORM.logObjective(_objectiveMap['match'], pass ? 'passed' : 'failed', pct, 0, 100);
+  }
+
   /* Hide submit row */
   var btn = document.getElementById('match-submit');
   if(btn){ var row = btn.closest('.quiz-submit-row'); if(row) row.style.display = 'none'; }
@@ -3884,11 +3979,39 @@ function showCertificate(){
 /* =================================================================== */
 var _scormStart = Date.now();
 
+/* Per-quiz start times and per-question first-shown times for latency */
+var _quizStartTimes = {};
+var _questionShownAt = {};
+
+/* Map quiz prefix → SCORM objective ID */
+var _objectiveMap = {
+  q1:  'm1_knowledge_check',
+  q2:  'm2_skills_quiz',
+  q3:  'm3_lesson_plans',
+  fib: 'm4_assessment_literacy',
+  match: 'm5_self_access',
+  qf:  'final_assessment'
+};
+
+function _scormLatency(prefix, qn) {
+  var key = prefix + '-' + qn;
+  var shown = _questionShownAt[key] || _quizStartTimes[prefix] || _scormStart;
+  return Math.max(1, Math.round((Date.now() - shown) / 1000));
+}
+
 function scormComplete(score){
   if(typeof SCORM === 'undefined') return;
   SCORM.setScore(score, 0, 100);
   SCORM.setSessionTime(Math.round((Date.now() - _scormStart) / 1000));
   SCORM.setCompletion(score >= 80 ? 'passed' : 'failed');
+  /* Persist full quiz state so a resume can restore progress */
+  try {
+    var suspend = JSON.stringify({
+      scores: quizScores,
+      completedAt: new Date().toISOString()
+    });
+    SCORM.setSuspendData(suspend);
+  } catch(e) {}
   SCORM.finish();
 }
 
