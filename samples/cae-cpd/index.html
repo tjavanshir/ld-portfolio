@@ -4027,13 +4027,13 @@ window.addEventListener('DOMContentLoaded', function(){
   /* Welcome counts as visited automatically */
   moduleStatus.welcome = true;
   document.getElementById('nav-welcome').classList.add('completed');
-  /* Show demo banner when running outside an LMS */
+  /* Show demo banner only after the full API retry window (15×200ms = 3s) has passed */
   setTimeout(function(){
     if(typeof SCORM !== 'undefined' && SCORM.isStandalone()){
       var b = document.getElementById('scorm-demo-banner');
       if(b) b.style.display = 'block';
     }
-  }, 600);
+  }, 3500);
 });
 
 function printCertificate(){
