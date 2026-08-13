@@ -100,8 +100,10 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
   };
 
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbxOC-tTHq4zNrvynTE9ZJRn6vTDzjW2vscble4FTWTrc1EtT2pyHnq-P9bCsikIrfoF/e', {
+    await fetch('https://script.google.com/macros/s/AKfycbxOC-tTHq4zNrvynTE9ZJRn6vTDzjW2vscble4FTWTrc1EtT2pyHnq-P9bCsikIrfoF/e', {
       method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(data)
     });
     showToast('Thanks! Your message has been received.');
