@@ -100,7 +100,7 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
   };
 
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbxOC-tTHq4zNrvynTE9ZJRn6vTDzjW2vscble4FTWTrc1EtT2pyHnq-P9bCsikIrfoF/e', {
+    await fetch('https://script.google.com/macros/s/AKfycbxOC-tTHq4zNrvynTE9ZJRn6vTDzjW2vscble4FTWTrc1EtT2pyHnq-P9bCsikIrfoF/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
