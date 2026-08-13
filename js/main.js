@@ -86,10 +86,33 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
 // Contact form
-document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
   e.preventDefault();
-  showToast('Thanks! Your message has been received.');
-  this.reset();
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  const data = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    project: document.getElementById('project').value,
+    message: document.getElementById('message').value
+  };
+
+  try {
+    const response = await fetch('https://script.google.com/macros/s/1EoxVej7ycvipNAaizxr2jxI3tLgMO9IFp8s1cfK_pGk/e', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    showToast('Thanks! Your message has been received.');
+    this.reset();
+  } catch (error) {
+    showToast('Error sending message. Please try again.');
+    console.error(error);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
+  }
 });
 
 function showToast(msg) {
