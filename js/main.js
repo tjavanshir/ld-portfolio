@@ -100,7 +100,7 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
   };
 
   try {
-    const response = await fetch('https://script.google.com/macros/s/1EoxVej7ycvipNAaizxr2jxI3tLgMO9IFp8s1cfK_pGk/e', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxOC-tTHq4zNrvynTE9ZJRn6vTDzjW2vscble4FTWTrc1EtT2pyHnq-P9bCsikIrfoF/e', {
       method: 'POST',
       body: JSON.stringify(data)
     });
