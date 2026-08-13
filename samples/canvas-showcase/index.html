@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canvas Course Design — Effective Communication in the Workplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --canvas: #E66000; --canvas-dark: #BF4E00; --canvas-bg: #FFF5F0;
+      --dark: #2D3B45; --mid: #556; --light: #F4F4F4; --white: #fff;
+      --radius: 8px; --shadow: 0 2px 12px rgba(0,0,0,0.09);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#f0f0f0;color:var(--dark);min-height:100vh}
+    a{text-decoration:none;color:inherit}
+
+    /* ── Portfolio header ── */
+    .portfolio-bar{background:var(--dark);color:#fff;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem}
+    .portfolio-bar a{color:#aaa;display:flex;align-items:center;gap:6px}
+    .portfolio-bar a:hover{color:#fff}
+    .portfolio-bar strong{color:var(--canvas)}
+
+    /* ── Canvas shell ── */
+    .canvas-shell{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 44px)}
+
+    /* ── Canvas Sidebar ── */
+    .c-sidebar{background:var(--dark);display:flex;flex-direction:column}
+    .c-logo{padding:16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
+    .c-logo-icon{width:36px;height:36px;background:var(--canvas);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.9rem}
+    .c-logo-text{color:#fff;font-size:.85rem;font-weight:600;line-height:1.3}
+    .c-logo-sub{color:#aaa;font-size:.7rem}
+    .c-nav{padding:8px}
+    .c-nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:6px;color:#aaa;font-size:.83rem;cursor:pointer;transition:all .2s}
+    .c-nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+    .c-nav-item.active{background:var(--canvas);color:#fff}
+    .c-nav-icon{font-size:1rem;flex-shrink:0}
+    .c-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:8px 0}
+
+    /* ── Canvas Main ── */
+    .c-main{background:#f0f2f5;overflow-y:auto}
+
+    /* ── Top bar ── */
+    .c-topbar{background:#fff;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dde;position:sticky;top:0;z-index:10}
+    .c-breadcrumb{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#778}
+    .c-breadcrumb .sep{color:#aaa}
+    .c-breadcrumb .current{color:var(--dark);font-weight:600}
+    .c-topbar-actions{display:flex;gap:8px}
+    .c-btn{padding:7px 14px;border-radius:5px;font-size:.8rem;font-weight:600;border:none;cursor:pointer;transition:all .2s}
+    .c-btn.orange{background:var(--canvas);color:#fff}
+    .c-btn.orange:hover{background:var(--canvas-dark)}
+    .c-btn.ghost{background:none;border:1px solid #ccc;color:var(--mid)}
+
+    /* ── Course Hero ── */
+    .c-course-hero{background:linear-gradient(135deg, #2D3B45 0%, #3d5166 100%);color:#fff;padding:32px 32px 24px;margin:0}
+    .c-course-code{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+    .c-course-title{font-size:1.6rem;font-weight:700;margin-bottom:4px}
+    .c-course-sub{font-size:.9rem;opacity:.75}
+    .c-course-meta{display:flex;gap:24px;margin-top:20px}
+    .c-meta-item{font-size:.8rem;opacity:.7;display:flex;align-items:center;gap:6px}
+
+    /* ── Content area ── */
+    .c-content{padding:28px 32px;max-width:1000px}
+
+    /* ── Modules ── */
+    .c-modules-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .c-modules-header h2{font-size:1.1rem;color:var(--dark)}
+    .c-module{background:#fff;border-radius:var(--radius);border:1px solid #dde;margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow)}
+    .c-module-header{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-bottom:1px solid #eee}
+    .c-module-header.open{background:#f8f9ff}
+    .c-module-title-wrap{display:flex;align-items:center;gap:10px}
+    .c-module-icon{width:28px;height:28px;border-radius:6px;background:var(--canvas);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+    .c-module-name{font-weight:700;font-size:.92rem;color:var(--dark)}
+    .c-module-count{font-size:.75rem;color:#889;margin-top:2px}
+    .c-chevron{color:#889;font-size:.85rem;transition:transform .25s}
+    .c-module.open .c-chevron{transform:rotate(180deg)}
+    .c-module-items{display:none;padding:0}
+    .c-module.open .c-module-items{display:block}
+
+    .c-item{display:flex;align-items:center;gap:14px;padding:12px 20px 12px 48px;border-bottom:1px solid #f0f0f0;font-size:.85rem;color:var(--dark);cursor:pointer;transition:background .15s}
+    .c-item:hover{background:#f8f9fa}
+    .c-item:last-child{border-bottom:none}
+    .c-item-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
+    .c-item-text{flex:1}
+    .c-item-name{font-weight:500}
+    .c-item-type{font-size:.72rem;color:#889;margin-top:1px}
+    .c-item-pts{font-size:.78rem;color:var(--canvas);font-weight:600;white-space:nowrap}
+    .c-item-status{width:16px;height:16px;border-radius:50%;border:2px solid #ccc;flex-shrink:0}
+    .c-item-status.done{background:var(--canvas);border-color:var(--canvas)}
+
+    /* ── Info panels ── */
+    .c-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+    .c-info-card{background:#fff;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+    .c-info-card h4{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--canvas);margin-bottom:12px}
+    .c-info-card ul{list-style:none}
+    .c-info-card li{font-size:.85rem;color:var(--mid);padding:6px 0;border-bottom:1px solid #f0f0f0;display:flex;gap:8px}
+    .c-info-card li:last-child{border-bottom:none}
+    .c-info-card li::before{content:'•';color:var(--canvas);flex-shrink:0}
+
+    /* Rubric */
+    .c-rubric{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;overflow:hidden}
+    .c-rubric h4{padding:14px 20px;background:#f8f9fa;font-size:.88rem;font-weight:700;border-bottom:1px solid #eee}
+    .c-rubric table{width:100%;border-collapse:collapse;font-size:.8rem}
+    .c-rubric th{background:#f0f2f5;padding:10px 14px;text-align:left;color:var(--mid);font-weight:600;border-bottom:1px solid #dde}
+    .c-rubric td{padding:10px 14px;border-bottom:1px solid #f0f0f0;vertical-align:top;color:var(--dark)}
+    .c-rubric tr:last-child td{border-bottom:none}
+    .c-rubric tr:nth-child(even) td{background:#fafafa}
+
+    /* Design notes */
+    .design-note{background:var(--canvas-bg);border:1px solid #fdc;border-radius:var(--radius);padding:16px 20px;margin-top:20px;font-size:.83rem;color:#7a3b00}
+    .design-note strong{color:var(--canvas-dark)}
+
+    /* Completion indicator */
+    .completion-ring{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#556}
+    .ring{width:36px;height:36px;border-radius:50%;background:conic-gradient(var(--canvas) 40%,#e0e0e0 40%);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--canvas)}
+
+    /* Back link */
+    .back-wrap{padding:20px 32px 0;font-size:.83rem}
+    .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--canvas);font-weight:600}
+    .back-link:hover{text-decoration:underline}
+
+    @media(max-width:700px){
+      .canvas-shell{grid-template-columns:1fr}
+      .c-sidebar{display:none}
+      .c-info-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Portfolio bar -->
+<div class="portfolio-bar">
+  <a href="../../index.html">← Portfolio</a>
+  <span>Work Sample: <strong>Canvas LMS Course Design</strong></span>
+  <span style="color:#aaa;font-size:.75rem;">Mockup / Design Showcase</span>
+</div>
+
+<div class="canvas-shell">
+
+  <!-- Sidebar (Canvas-style) -->
+  <nav class="c-sidebar">
+    <div class="c-logo">
+      <div class="c-logo-icon">C</div>
+      <div>
+        <div class="c-logo-text">Canvas LMS</div>
+        <div class="c-logo-sub">Demo Institution</div>
+      </div>
+    </div>
+    <div class="c-nav">
+      <div class="c-nav-item"><span class="c-nav-icon">🏠</span> Dashboard</div>
+      <div class="c-nav-item active"><span class="c-nav-icon">📚</span> Courses</div>
+      <div class="c-nav-item"><span class="c-nav-icon">📅</span> Calendar</div>
+      <div class="c-nav-item"><span class="c-nav-icon">💬</span> Inbox</div>
+      <hr class="c-divider">
+      <div class="c-nav-item"><span class="c-nav-icon">📊</span> Grades</div>
+      <div class="c-nav-item"><span class="c-nav-icon">👥</span> People</div>
+      <div class="c-nav-item"><span class="c-nav-icon">⚙️</span> Settings</div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="c-main">
+
+    <!-- Top bar -->
+    <div class="c-topbar">
+      <div class="c-breadcrumb">
+        <span>Courses</span>
+        <span class="sep">›</span>
+        <span class="current">COMM1001 — Effective Communication</span>
+      </div>
+      <div class="c-topbar-actions">
+        <button class="c-btn ghost">Preview</button>
+        <button class="c-btn orange">Edit Course</button>
+      </div>
+    </div>
+
+    <!-- Course hero -->
+    <div class="c-course-hero">
+      <div class="c-course-code">COMM1001 · Semester 1, 2026</div>
+      <div class="c-course-title">Effective Communication in the Workplace</div>
+      <div class="c-course-sub">A practical 6-week course covering verbal, written, and digital communication skills</div>
+      <div class="c-course-meta">
+        <div class="c-meta-item">📅 6 weeks · 2 hrs/week</div>
+        <div class="c-meta-item">👥 24 enrolled</div>
+        <div class="c-meta-item">🎯 100 points total</div>
+        <div class="c-meta-item">🌐 Blended delivery</div>
+      </div>
+    </div>
+
+    <div class="c-content">
+
+      <!-- Design notes -->
+      <div class="design-note">
+        <strong>Instructional Design Note:</strong> This Canvas course uses a Modules-first structure with prerequisite-gating to enforce sequence. Each module contains a page (content), a discussion, and an assignment or quiz. Outcomes are aligned to graduate attributes and mapped to Bloom's levels 2–4.
+      </div>
+
+      <!-- Modules -->
+      <div class="c-modules-header" style="margin-top:24px;">
+        <h2>Course Modules</h2>
+        <div class="completion-ring">
+          <div class="ring">40%</div>
+          <span>2 of 6 modules complete (sample)</span>
+        </div>
+      </div>
+
+      <!-- Module 1 (open) -->
+      <div class="c-module open">
+        <div class="c-module-header open">
+          <div class="c-module-title-wrap">
+            <div class="c-module-icon">1</div>
+            <div>
+              <div class="c-module-name">Foundations of Workplace Communication</div>
+              <div class="c-module-count">5 items · Prerequisites: None</div>
+            </div>
+          </div>
+          <span class="c-chevron">▼</span>
+        </div>
+        <div class="c-module-items">
+          <div class="c-item">
+            <span class="c-item-icon">📄</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Welcome &amp; Course Overview</div>
+              <div class="c-item-type">Page</div>
+            </div>
+            <div class="c-item-status done"></div>
+          </div>
+          <div class="c-item">
+            <span class="c-item-icon">🎬</span>
+            <div class="c-item-text">
+              <div class="c-item-name">What is Effective Communication? (Video, 8 min)</div>
+              <div class="c-item-type">Media Page</div>
+            </div>
+            <div class="c-item-status done"></div>
+          </div>
+          <div class="c-item">
+            <span class="c-item-icon">💬</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Introduce Yourself — Discussion Board</div>
+              <div class="c-item-type">Discussion · Graded</div>
+            </div>
+            <div class="c-item-pts">5 pts</div>
+            <div class="c-item-status done"></div>
+          </div>
+          <div class="c-item">
+            <span class="c-item-icon">📖</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Reading: Communication Models (Shannon &amp; Weaver)</div>
+              <div class="c-item-type">External Link</div>
+            </div>
+            <div class="c-item-status done"></div>
+          </div>
+          <div class="c-item">
+            <span class="c-item-icon">❓</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Module 1 Check — Communication Basics Quiz</div>
+              <div class="c-item-type">Quiz · 10 questions · 2 attempts</div>
+            </div>
+            <div class="c-item-pts">10 pts</div>
+            <div class="c-item-status done"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 2 -->
+      <div class="c-module open">
+        <div class="c-module-header open">
+          <div class="c-module-title-wrap">
+            <div class="c-module-icon" style="background:#0D9488">2</div>
+            <div>
+              <div class="c-module-name">Active Listening &amp; Non-Verbal Communication</div>
+              <div class="c-module-count">5 items · Prerequisite: Module 1 Quiz ≥ 60%</div>
+            </div>
+          </div>
+          <span class="c-chevron">▼</span>
+        </div>
+        <div class="c-module-items">
+          <div class="c-item">
+            <span class="c-item-icon">📄</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Active Listening Strategies</div>
+              <div class="c-item-type">Page</div>
+            </div>
+            <div class="c-item-status done"></div>
+          </div>
+          <div class="c-item">
+            <span class="c-item-icon">🎮</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Non-Verbal Cues — Interactive Scenario (H5P)</div>
+              <div class="c-item-type">H5P · Interactive Branching Scenario</div>
+            </div>
+            <div class="c-item-status"></div>
+          </div>
+          <div class="c-item">
+            <span class="c-item-icon">💬</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Reflective Practice: A Listening Moment</div>
+              <div class="c-item-type">Discussion · Peer-reviewed</div>
+            </div>
+            <div class="c-item-pts">10 pts</div>
+            <div class="c-item-status"></div>
+          </div>
+          <div class="c-item">
+            <span class="c-item-icon">📝</span>
+            <div class="c-item-text">
+              <div class="c-item-name">Assignment 1: Communication Style Analysis (600 words)</div>
+              <div class="c-item-type">Assignment · Due Week 3</div>
+            </div>
+            <div class="c-item-pts">25 pts</div>
+            <div class="c-item-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modules 3-6 collapsed -->
+      <div class="c-module">
+        <div class="c-module-header">
+          <div class="c-module-title-wrap">
+            <div class="c-module-icon" style="background:#7C3AED">3</div>
+            <div>
+              <div class="c-module-name">Written Communication — Emails, Reports &amp; Docs</div>
+              <div class="c-module-count">6 items · Prerequisite: Assignment 1 submitted</div>
+            </div>
+          </div>
+          <span class="c-chevron">▼</span>
+        </div>
+        <div class="c-module-items"></div>
+      </div>
+      <div class="c-module">
+        <div class="c-module-header">
+          <div class="c-module-title-wrap">
+            <div class="c-module-icon" style="background:#D97706">4</div>
+            <div>
+              <div class="c-module-name">Presenting with Confidence</div>
+              <div class="c-module-count">5 items · Prerequisite: Module 3 complete</div>
+            </div>
+          </div>
+          <span class="c-chevron">▼</span>
+        </div>
+        <div class="c-module-items"></div>
+      </div>
+      <div class="c-module">
+        <div class="c-module-header">
+          <div class="c-module-title-wrap">
+            <div class="c-module-icon" style="background:#DC2626">5</div>
+            <div>
+              <div class="c-module-name">Digital &amp; Intercultural Communication</div>
+              <div class="c-module-count">5 items · Prerequisite: Module 4 complete</div>
+            </div>
+          </div>
+          <span class="c-chevron">▼</span>
+        </div>
+        <div class="c-module-items"></div>
+      </div>
+      <div class="c-module">
+        <div class="c-module-header">
+          <div class="c-module-title-wrap">
+            <div class="c-module-icon" style="background:#0F172A">6</div>
+            <div>
+              <div class="c-module-name">Capstone — Communication Portfolio</div>
+              <div class="c-module-count">3 items · Final Assessment · 50 pts</div>
+            </div>
+          </div>
+          <span class="c-chevron">▼</span>
+        </div>
+        <div class="c-module-items"></div>
+      </div>
+
+      <!-- Assessment summary + Rubric -->
+      <div class="c-info-grid">
+        <div class="c-info-card">
+          <h4>Assessment Summary</h4>
+          <ul>
+            <li>Module quizzes (×5) — 25 pts (25%)</li>
+            <li>Discussion posts (×5) — 25 pts (25%)</li>
+            <li>Assignment 1: Style Analysis — 25 pts (25%)</li>
+            <li>Capstone Portfolio — 25 pts (25%)</li>
+          </ul>
+        </div>
+        <div class="c-info-card">
+          <h4>Instructional Design Choices</h4>
+          <ul>
+            <li>Sequential gating enforces prior completion</li>
+            <li>Each module = learn · practise · assess cycle</li>
+            <li>Discussions use peer-review to scale feedback</li>
+            <li>H5P for interactive scenarios (no authoring tool)</li>
+            <li>Outcomes mapped to each module in Settings</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sample Rubric -->
+      <div class="c-rubric">
+        <h4>Sample Rubric — Assignment 1: Communication Style Analysis</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Excellent (5)</th>
+              <th>Good (3–4)</th>
+              <th>Developing (1–2)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Identification of style</strong></td>
+              <td>Correctly identifies own communication style with evidence from three or more specific examples</td>
+              <td>Identifies style with one or two examples; mostly accurate</td>
+              <td>Style identification is vague or unsupported</td>
+            </tr>
+            <tr>
+              <td><strong>Use of theory</strong></td>
+              <td>Accurately applies at least one communication model (e.g. Shannon–Weaver); explains its relevance</td>
+              <td>References a model but application is superficial</td>
+              <td>No clear link to theory</td>
+            </tr>
+            <tr>
+              <td><strong>Reflection quality</strong></td>
+              <td>Demonstrates critical self-awareness; identifies specific improvement strategies</td>
+              <td>Some reflection; improvement strategies are generic</td>
+              <td>Little evidence of reflection; surface-level response</td>
+            </tr>
+            <tr>
+              <td><strong>Written communication</strong></td>
+              <td>Clear, well-structured writing; appropriate academic tone; minimal errors</td>
+              <td>Mostly clear; some structural or language issues</td>
+              <td>Frequent errors impede readability</td>
+            </tr>
+            <tr>
+              <td><strong>Word count &amp; format</strong></td>
+              <td>Within ±10% of 600-word target; correct APA in-text citation</td>
+              <td>Slightly outside range or minor citation issues</td>
+              <td>Significantly off word count or citations missing</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// Toggle modules open/closed
+document.querySelectorAll('.c-module-header').forEach(h => {
+  h.addEventListener('click', () => {
+    const m = h.closest('.c-module');
+    m.classList.toggle('open');
+    h.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
