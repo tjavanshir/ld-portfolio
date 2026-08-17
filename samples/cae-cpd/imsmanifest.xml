@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<manifest identifier="cae-teacher-cpd" version="1.0"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="cae-teacher-cpd" version="2.0"
   xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
   xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -15,16 +15,56 @@
 
   <organizations default="cae_cpd_org">
     <organization identifier="cae_cpd_org">
-      <title>Cambridge English C1 Advanced (CAE) – Teacher Preparation CPD</title>
-      <item identifier="item_1" identifierref="resource_1">
-        <title>CAE Teacher CPD Module</title>
+      <title>Cambridge English C1 Advanced (CAE) - Teacher Preparation CPD</title>
+      <item identifier="item_m1" identifierref="resource_m1">
+        <title>Module 1 - Core Exam Familiarisation</title>
+        <adlcp:masteryscore>80</adlcp:masteryscore>
+      </item>
+      <item identifier="item_m2" identifierref="resource_m2">
+        <title>Module 2 - Skills-Based Teaching Resources</title>
+        <adlcp:masteryscore>80</adlcp:masteryscore>
+      </item>
+      <item identifier="item_m3" identifierref="resource_m3">
+        <title>Module 3 - Lesson Plans and Classroom Activities</title>
+        <adlcp:masteryscore>80</adlcp:masteryscore>
+      </item>
+      <item identifier="item_m4" identifierref="resource_m4">
+        <title>Module 4 - Assessment Literacy</title>
+        <adlcp:masteryscore>80</adlcp:masteryscore>
+      </item>
+      <item identifier="item_m5" identifierref="resource_m5">
+        <title>Module 5 - Self-Access and Supplementary Resources</title>
+        <adlcp:masteryscore>80</adlcp:masteryscore>
+      </item>
+      <item identifier="item_final" identifierref="resource_final">
+        <title>Final Assessment and Certificate</title>
         <adlcp:masteryscore>80</adlcp:masteryscore>
       </item>
     </organization>
   </organizations>
 
   <resources>
-    <resource identifier="resource_1" type="webcontent" adlcp:scormtype="sco" href="index.html">
+    <resource identifier="resource_m1" type="webcontent" adlcp:scormtype="sco" href="index.html?sco=m1">
+      <file href="index.html"/>
+      <file href="js/api.js"/>
+    </resource>
+    <resource identifier="resource_m2" type="webcontent" adlcp:scormtype="sco" href="index.html?sco=m2">
+      <file href="index.html"/>
+      <file href="js/api.js"/>
+    </resource>
+    <resource identifier="resource_m3" type="webcontent" adlcp:scormtype="sco" href="index.html?sco=m3">
+      <file href="index.html"/>
+      <file href="js/api.js"/>
+    </resource>
+    <resource identifier="resource_m4" type="webcontent" adlcp:scormtype="sco" href="index.html?sco=m4">
+      <file href="index.html"/>
+      <file href="js/api.js"/>
+    </resource>
+    <resource identifier="resource_m5" type="webcontent" adlcp:scormtype="sco" href="index.html?sco=m5">
+      <file href="index.html"/>
+      <file href="js/api.js"/>
+    </resource>
+    <resource identifier="resource_final" type="webcontent" adlcp:scormtype="sco" href="index.html?sco=cert">
       <file href="index.html"/>
       <file href="js/api.js"/>
     </resource>
