@@ -571,3 +571,37 @@ footer a { color: var(--secondary); }
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+
+/* Resume-led portfolio refinements */
+.hero { min-height: auto; padding-top: 112px; padding-bottom: 72px; }
+.hero-stats { flex-wrap: wrap; gap: 28px 48px; margin-top: 48px; padding-top: 32px; }
+.stat-value { font-size: 1.8rem; }
+.experience { background: var(--white); }
+.experience-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.experience-card { background: var(--light); border: 1px solid rgba(15,23,42,.06); border-radius: var(--radius); padding: 28px; }
+.experience-date { display: inline-block; margin-bottom: 12px; color: var(--secondary); font-size: .78rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.experience-card h3 { line-height: 1.4; margin-bottom: 4px; }
+.experience-org { color: var(--mid); font-size: .88rem; font-weight: 600; margin-bottom: 14px; }
+.experience-card ul { padding-left: 19px; color: var(--mid); font-size: .88rem; line-height: 1.7; }
+.experience-card li + li { margin-top: 7px; }
+.sample-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.case-link { font-size: .75rem; color: var(--mid); }
+.case-link:hover { color: var(--primary); text-decoration: underline; }
+.access-note { margin-top: 16px; padding: 13px 14px; display: flex; flex-direction: column; gap: 3px; border-radius: 9px; background: #F8FAFC; border: 1px solid #E2E8F0; color: var(--mid); font-size: .78rem; line-height: 1.55; }
+.access-note strong { color: var(--dark-2); font-size: .76rem; }
+.access-note a { color: var(--primary-light); text-decoration: underline; }
+.access-note code { color: var(--dark); font-weight: 700; }
+.platform-mark { display: inline-flex; align-items: center; justify-content: center; width: 76px; height: 76px; border-radius: 20px; color: white; font-size: 2.7rem; font-weight: 800; letter-spacing: -.08em; box-shadow: 0 10px 24px rgba(0,0,0,.16); }
+.canvas-mark { background: #E66000; font-family: Georgia, serif; font-style: italic; }
+.moodle-mark { background: #F98012; font-family: Arial, sans-serif; }
+.scorm-mark { width: auto; min-width: 90px; height: 62px; padding: 8px 14px; border-radius: 13px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.38); font-size: 1rem; letter-spacing: .08em; flex-direction: column; gap: 0; }
+.scorm-mark span { font-size: 1.2rem; letter-spacing: .03em; }
+.sample-thumb { gap: 14px; }
+@media (max-width: 700px) {
+  .experience-grid { grid-template-columns: 1fr; }
+  .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .hero { padding-top: 104px; }
+  .sample-meta { align-items: flex-start; gap: 12px; flex-direction: column; }
+  .sample-actions { align-items: flex-start; }
+}
