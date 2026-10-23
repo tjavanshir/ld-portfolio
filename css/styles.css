@@ -605,3 +605,24 @@ footer a { color: var(--secondary); }
   .sample-meta { align-items: flex-start; gap: 12px; flex-direction: column; }
   .sample-actions { align-items: flex-start; }
 }
+
+
+/* Portfolio course buttons: high-contrast platform palette */
+.sample-link.btn-primary {
+  background: linear-gradient(135deg, #1E3A8A 0%, #0D9488 100%);
+  color: #FFFFFF;
+  padding: 11px 16px;
+  border-radius: 9px;
+  box-shadow: 0 5px 14px rgba(30,58,138,0.2);
+}
+.sample-link.btn-primary:hover {
+  background: linear-gradient(135deg, #172E6B 0%, #0A766D 100%);
+  color: #FFFFFF;
+  gap: 8px;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13,148,136,0.28);
+}
+.sample-link.btn-primary:focus-visible {
+  outline: 3px solid #F59E0B;
+  outline-offset: 3px;
+}
