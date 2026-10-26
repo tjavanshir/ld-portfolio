@@ -656,3 +656,9 @@ footer a { color: var(--secondary); }
   content: none;
   display: none;
 }
+
+/* Remove the legacy Rise pseudo-panel; the card now has a real reviewer panel. */
+.samples-grid .sample-card:nth-of-type(2) .sample-body::after {
+  content: none !important;
+  display: none !important;
+}
