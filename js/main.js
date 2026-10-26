@@ -5,6 +5,71 @@ const nav = document.querySelector('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
   updateActiveNav();
+});// Optional GA4: only load after a visitor opts in. Advertising features stay off.
+const GA4_MEASUREMENT_ID = 'G-T1S6E67NJB';
+const GA4_CHOICE_KEY = 'portfolio-google-analytics-choice';
+
+function loadPortfolioAnalytics() {
+  if (window.location.hostname !== 'tjavanshir.github.io') return;
+  if (window.__portfolioGa4Loaded) {
+    window.__portfolioGa4Enabled = true;
+    window.gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+    return;
+  }
+  window.__portfolioGa4Loaded = true;
+  window.__portfolioGa4Enabled = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  window.gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  window.gtag('config', GA4_MEASUREMENT_ID, { allow_google_signals: false, allow_ad_personalization_signals: false, page_location: window.location.origin + window.location.pathname });
+  const tag = document.createElement('script');
+  tag.async = true;
+  tag.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
+  document.head.appendChild(tag);
+}
+
+function trackPortfolioEvent(name, details) {
+  if (window.__portfolioGa4Enabled && typeof window.gtag === 'function') window.gtag('event', name, details);
+}
+
+const analyticsConsent = document.getElementById('analyticsConsent');
+const openAnalyticsPreferences = document.getElementById('openAnalyticsPreferences');
+const acceptAnalytics = document.getElementById('acceptAnalytics');
+const rejectAnalytics = document.getElementById('rejectAnalytics');
+function closeAnalyticsPreferences() { if (analyticsConsent) analyticsConsent.hidden = true; }
+function chooseAnalytics(choice) {
+  try { localStorage.setItem(GA4_CHOICE_KEY, choice); } catch (error) {}
+  if (choice === 'accepted') loadPortfolioAnalytics();
+  else if (window.__portfolioGa4Loaded) {
+    window.__portfolioGa4Enabled = false;
+    window.gtag('consent', 'update', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+    window.location.reload();
+  }
+  closeAnalyticsPreferences();
+}
+try {
+  const analyticsChoice = localStorage.getItem(GA4_CHOICE_KEY);
+  if (analyticsChoice === 'accepted') loadPortfolioAnalytics();
+  else if (!analyticsChoice && analyticsConsent) analyticsConsent.hidden = false;
+} catch (error) { if (analyticsConsent) analyticsConsent.hidden = false; }
+acceptAnalytics?.addEventListener('click', () => chooseAnalytics('accepted'));
+rejectAnalytics?.addEventListener('click', () => chooseAnalytics('rejected'));
+openAnalyticsPreferences?.addEventListener('click', () => { if (analyticsConsent) analyticsConsent.hidden = false; });
+
+document.querySelectorAll('.sample-link').forEach(link => {
+  link.addEventListener('click', () => {
+    const card = link.closest('.sample-card');
+    const title = card?.querySelector('h3')?.textContent?.trim() || 'Learning sample';
+    const host = new URL(link.href, window.location.href).hostname;
+    let platform = 'Other';
+    if (host.includes('instructure')) platform = 'Canvas';
+    else if (host.includes('moodlecloud')) platform = 'Moodle';
+    else if (host.includes('articulate')) platform = 'Rise';
+    else if (host.includes('scorm')) platform = 'SCORM Cloud';
+    trackPortfolioEvent('portfolio_sample_open', { sample_name: title, platform });
+  });
 });
 
 // Mobile hamburger
@@ -106,6 +171,7 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(data)
     });
+    trackPortfolioEvent('contact_form_success', { form_name: 'portfolio_contact' });
     showToast('Thanks! Your message has been received.');
     this.reset();
   } catch (error) {
