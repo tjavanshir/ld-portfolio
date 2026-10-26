@@ -626,3 +626,19 @@ footer a { color: var(--secondary); }
   outline: 3px solid #F59E0B;
   outline-offset: 3px;
 }
+
+/* Keep the Rise card footer aligned with the LMS reviewer panels. */
+.samples-grid .sample-card:nth-of-type(2) .sample-body::after {
+  content: "Public preview — open the course directly. No sign-in required.";
+  margin-top: 16px;
+  min-height: 108px;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: var(--mid);
+  font-size: .78rem;
+  line-height: 1.55;
+}
