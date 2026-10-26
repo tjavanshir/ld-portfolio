@@ -662,3 +662,9 @@ footer a { color: var(--secondary); }
   content: none !important;
   display: none !important;
 }
+
+/* The Rise card has its own real reviewer panel in the markup. */
+.samples-grid .sample-body::after {
+  content: none !important;
+  display: none !important;
+}
