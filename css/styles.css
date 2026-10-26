@@ -642,3 +642,17 @@ footer a { color: var(--secondary); }
   font-size: .78rem;
   line-height: 1.55;
 }
+
+
+/* Align reviewer panels across the sample cards. */
+.samples-grid .sample-card > .access-note {
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-bottom: 24px;
+}
+
+/* Rise now uses a real reviewer panel like the other course cards. */
+.samples-grid .sample-card:nth-of-type(2) .sample-body::after {
+  content: none;
+  display: none;
+}
