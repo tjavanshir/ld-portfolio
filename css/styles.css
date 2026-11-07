@@ -742,10 +742,3 @@ footer a { color: var(--secondary); }
 @media (prefers-reduced-motion: reduce) {
   .bright-starts-thumb img { transition: none; }
 }
-/* Selected L&D and instructional design delivery measures. */
-.experience-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
-.experience-kpis div{display:flex;flex-direction:column;gap:5px;padding:17px 18px;background:#eff6f5;border:1px solid #dceae7;border-radius:10px}
-.experience-kpis strong{color:var(--primary);font-size:1.12rem;line-height:1.25}
-.experience-kpis span{color:var(--mid);font-size:.76rem;line-height:1.45}
-@media(max-width:800px){.experience-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:420px){.experience-kpis{grid-template-columns:1fr}}
