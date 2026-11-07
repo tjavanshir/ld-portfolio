@@ -43,6 +43,6 @@
 .close-page .cover-kicker{color:#557b4a}
 .close-page h2{font:700 clamp(2.25rem,5vw,3.5rem)/1 Fraunces,Georgia,serif;letter-spacing:-.035em;color:#315c43;margin:12px 0 18px}
 .close-page h2 em{color:#bd7153;font-weight:600}
-.close-page img{display:block;width:min(100%,370px);height:auto;max-height:278px;object-fit:contain;margin:0 auto;border:8px solid rgba(255,255,255,.72);border-radius:18px;box-shadow:0 12px 30px rgba(49,83,54,.14)}
-@media(max-width:700px){.book-page.close-sheet{min-height:560px;padding:22px}.close-page{min-height:510px;padding:20px 10px}.close-page img{width:min(100%,330px);max-height:248px}}
-@media print{.book-page.reader-page{print-color-adjust:exact;-webkit-print-color-adjust:exact}.book-page.close-sheet{min-height:268mm;height:268mm;padding:12mm;break-after:page;background:#f5f8ec!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.close-page{min-height:244mm;height:244mm}.close-page img{width:auto;height:auto;max-width:105mm;max-height:82mm;border-width:2mm;box-shadow:none}}
+.close-page img{display:block;width:min(100%,310px);height:auto;max-height:232px;object-fit:contain;margin:0 auto;border:8px solid rgba(255,255,255,.72);border-radius:18px;box-shadow:0 12px 30px rgba(49,83,54,.14)}
+@media(max-width:700px){.book-page.close-sheet{min-height:560px;padding:22px}.close-page{min-height:510px;padding:20px 10px}.close-page img{width:min(100%,240px);max-height:180px}}
+@media print{.book-page.reader-page{print-color-adjust:exact;-webkit-print-color-adjust:exact}.book-page.close-sheet{min-height:268mm;height:268mm;padding:12mm;break-after:page;background:#f5f8ec!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.close-page{min-height:244mm;height:244mm}.close-page img{width:auto;height:auto;max-width:88mm;max-height:68mm;border-width:2mm;box-shadow:none}}
