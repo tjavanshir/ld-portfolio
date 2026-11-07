@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore Bright Starts Level 1 Unit 1 as a complete digital learner sample: 24 Student Book pages, 14 Activity Book pages, task-linked visuals, interactions and script previews.">
+<title>Unit 1 · Hello, English! | Bright Starts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="unit.css">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">B</span><span>Bright Starts<small>Level 1 · Unit 1</small></span></a><a class="back-link" href="../index.html">Case study <span aria-hidden="true">↗</span></a></header>
+<main class="shell">
+  <section class="intro"><div><p class="eyebrow">Complete digital unit sample</p><h1>Hello,<br><em>English!</em></h1><p class="intro-copy">An eight-lesson first unit for young English learners. Explore the learner-facing pages, use the practice controls, or print a page for classroom use.</p></div><div class="unit-facts"><span>8 lessons</span><span>24 Student Book pages</span><span>14 Activity Book pages</span><span>18 audio scripts</span></div></section>
+  <section class="production-note" aria-label="Production status"><span class="note-icon" aria-hidden="true">i</span><div><strong>Digital learner edition · production transparency</strong><p>This sample contains the complete authored unit content and page-level learning tasks. Track controls use your browser’s synthetic voice as a script preview; they are not recorded character audio, and the songs are spoken rather than sung. Final professionally recorded audio and print-production proofing remain production steps.</p></div></section>
+  <section class="reader" aria-label="Unit reader">
+    <div class="reader-tools">
+      <div class="book-switch" role="group" aria-label="Choose a book"><button class="book-btn active" data-book="student" aria-pressed="true">Student Book</button><button class="book-btn" data-book="activity" aria-pressed="false">Activity Book</button></div>
+      <label class="lesson-picker">Jump to lesson<select id="lessonSelect" aria-label="Jump to a lesson"></select></label>
+    </div>
+    <div class="reader-progress"><span id="pageLabel">Cover</span><div class="progress-track"><span id="progressFill"></span></div><span id="pageCount">1 / 25</span></div>
+    <div class="page-stage"><article class="book-page" id="bookPage" aria-live="polite"></article></div>
+    <div class="page-controls"><button class="control-btn" id="prevPage" aria-label="Previous page">← <span>Previous</span></button><div class="page-dots" id="pageDots" aria-label="Page navigation"></div><button class="control-btn" id="nextPage"><span>Next</span> →</button></div>
+    <div class="print-actions"><button class="print-btn" id="printPage">Print this page</button><span>Use your browser’s print dialog to save a page as PDF.</span></div>
+  </section>
+  <section class="audio-note"><span class="audio-wave" aria-hidden="true">♫</span><p><strong>Audio preview:</strong> Select a numbered Listen button on a page to hear the corresponding script spoken by your browser. You can pause or stop it at any time. Track 06 and Track 16 show the song lyrics as text-to-speech, without melody.</p><button id="stopAudio" class="stop-btn">Stop preview</button></section>
+  <footer><a href="../index.html">← Bright Starts case study</a><span>Unit content: Bright Starts Level 1 production manuscript · Portfolio sample by Tim Javanshir</span></footer>
+</main>
+<script src="unit-data.js"></script><script src="unit.js"></script>
+</body></html>
