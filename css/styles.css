@@ -704,3 +704,40 @@ footer a { color: var(--secondary); }
   .analytics-consent-actions { justify-content: stretch; }
   .analytics-consent-actions button { flex: 1 1 auto; }
 }
+
+/* Bright Starts case study card */
+.bright-starts-thumb {
+  height: 180px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #dbeafe, #d1fae5);
+}
+.bright-starts-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 38%;
+  transition: transform .35s ease;
+}
+.sample-card:hover .bright-starts-thumb img { transform: scale(1.04); }
+.bright-starts-thumb-label {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, .78);
+  color: #fff;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.bright-starts-thumb:focus-visible {
+  outline: 3px solid var(--primary-light);
+  outline-offset: -3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bright-starts-thumb img { transition: none; }
+}
