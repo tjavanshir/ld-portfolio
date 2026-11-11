@@ -742,3 +742,4 @@ footer a { color: var(--secondary); }
 @media (prefers-reduced-motion: reduce) {
   .bright-starts-thumb img { transition: none; }
 }
+.get-program-thumb{background:linear-gradient(135deg,#11253b,#205a83 62%,#20827b);position:relative;gap:8px}.get-mark{font:800 2.4rem/1 Manrope,Arial,sans-serif;color:white;letter-spacing:.03em}.get-program-thumb .sample-label{font-size:.58rem;letter-spacing:.12em;color:#dcefeb}
