@@ -1,122 +1,49 @@
-.portfolio-global-header {
-  position: sticky;
+/* Shared homepage navigation styles. Keep #mainNav markup in index.html. */
+#mainNav {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  --primary: #1E3A8A;
+  --primary-light: #3B82F6;
+  --secondary: #0D9488;
+  --dark: #0F172A;
+  --mid: #475569;
+  --light: #F1F5F9;
+  --white: #FFFFFF;
+  --radius-sm: 6px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: fixed;
   top: 0;
-  z-index: 10000;
-  width: 100%;
-  background: #f7f8fa;
-  border-bottom: 1px solid #d9dee6;
-  box-shadow: 0 1px 4px rgba(15, 23, 42, .05);
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: var(--transition);
 }
-.portfolio-global-inner {
-  width: min(2304px, calc(100% - 64px));
-  min-height: 82px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-}
-.portfolio-global-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 20px;
-  flex: 0 0 auto;
-  color: #1e3a8a;
-  font-size: clamp(1.15rem, 1.5vw, 1.55rem);
-  font-weight: 800;
-  letter-spacing: -.035em;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.portfolio-global-brand b { color: #0d9488; }
-.portfolio-global-mark { width: 76px; height: 76px; display: block; }
-.portfolio-global-nav ul {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: clamp(8px, 1.25vw, 32px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.portfolio-global-header nav.portfolio-global-nav {
-  position: static;
-  inset: auto;
-  z-index: auto;
-  background: transparent;
-  backdrop-filter: none;
-  border: 0;
-  box-shadow: none;
-  transition: none;
-}
-.portfolio-global-nav a {
-  display: block;
-  padding: 10px 12px;
-  color: #475569;
-  font-size: clamp(.9rem, 1.15vw, 1.15rem);
-  font-weight: 600;
-  line-height: 1.25;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color .18s ease, background-color .18s ease;
-}
-.portfolio-global-nav a:hover,
-.portfolio-global-nav a:focus-visible { color: #1e3a8a; }
-.portfolio-global-contact a {
-  padding: 14px 24px;
-  border-radius: 9px;
-  background: #1e3a8a;
-  color: #fff;
-  font-weight: 700;
-}
-.portfolio-global-contact a:hover,
-.portfolio-global-contact a:focus-visible { background: #294daf; color: #fff; }
-.portfolio-global-toggle { display: none; }
-@media (max-width: 900px) {
-  .portfolio-global-inner { width: calc(100% - 40px); min-height: 70px; gap: 14px; }
-  .portfolio-global-mark { width: 54px; height: 54px; }
-  .portfolio-global-brand { gap: 12px; }
-  .portfolio-global-toggle {
-    display: flex;
-    width: 44px;
-    height: 44px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    border: 1px solid #d9dee6;
-    border-radius: 8px;
-    background: white;
-    cursor: pointer;
-  }
-  .portfolio-global-toggle i { width: 19px; height: 2px; background: #1e293b; }
-  .portfolio-global-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    padding: 10px 20px 16px;
-    background: #f7f8fa;
-    border-bottom: 1px solid #d9dee6;
-    box-shadow: 0 12px 18px rgba(15, 23, 42, .08);
-  }
-  .portfolio-global-header nav.portfolio-global-nav {
-    position: absolute;
-    inset: 100% 0 auto;
-    z-index: 10001;
-    background: #f7f8fa;
-    border-bottom: 1px solid #d9dee6;
-    box-shadow: 0 12px 18px rgba(15, 23, 42, .08);
-  }
-  .portfolio-global-nav.is-open { display: block; }
-  .portfolio-global-nav ul { display: flex; flex-direction: column; align-items: stretch; gap: 2px; }
-  .portfolio-global-nav a { padding: 12px; font-size: 1rem; }
-  .portfolio-global-contact a { text-align: center; margin-top: 5px; }
-}
-@media (max-width: 380px) {
-  .portfolio-global-inner { width: calc(100% - 24px); }
-  .portfolio-global-mark { width: 46px; height: 46px; }
-  .portfolio-global-brand { font-size: 1.05rem; gap: 9px; }
+#mainNav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.09); }
+#mainNav .container { width: min(1200px, 100%); margin: 0 auto; padding: 0 24px; }
+#mainNav .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+#mainNav .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+#mainNav .nav-logo-icon { flex-shrink: 0; border-radius: 10px; }
+#mainNav .nav-logo-text { font-weight: 800; font-size: 1.05rem; color: var(--primary); letter-spacing: -0.02em; }
+#mainNav .nav-logo-text span { color: var(--secondary); }
+#mainNav .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; position: relative; margin: 0; padding: 0; }
+#mainNav .nav-links li { position: relative; }
+#mainNav .nav-links a { display: block; padding: 8px 16px; border-radius: var(--radius-sm); font-weight: 500; font-size: 0.88rem; color: var(--mid); transition: color 0.2s ease; white-space: nowrap; position: relative; z-index: 1; text-decoration: none; }
+#mainNav .nav-links a:hover { color: var(--primary); }
+#mainNav .nav-links a.active { color: var(--primary); font-weight: 600; }
+#mainNav .nav-indicator { position: absolute; top: 50%; transform: translateY(-50%); height: 34px; background: var(--light); border-radius: var(--radius-sm); transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease; opacity: 0; pointer-events: none; z-index: 0; }
+#mainNav .nav-indicator.visible { opacity: 1; }
+#mainNav .nav-cta { background: var(--primary) !important; color: var(--white) !important; padding: 8px 18px !important; border-radius: 8px !important; font-weight: 600 !important; }
+#mainNav .nav-cta:hover { background: var(--primary-light) !important; color: var(--white) !important; }
+#mainNav .nav-links li:has(.nav-cta) { margin-left: 8px; }
+#mainNav .nav-hamburger { display: none; cursor: pointer; padding: 8px; }
+#mainNav .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--dark); margin: 5px 0; transition: var(--transition); }
+body.has-portfolio-header { padding-top: 70px; }
+
+@media (max-width: 640px) {
+  #mainNav .nav-links { display: none; }
+  #mainNav .nav-hamburger { display: block; }
+  #mainNav .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: var(--white); padding: 16px; border-bottom: 1px solid var(--light); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  #mainNav .nav-links.open li { width: 100%; }
 }
