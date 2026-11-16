@@ -5,7 +5,7 @@
 
   const style = document.createElement('link');
   style.rel = 'stylesheet';
-  style.href = asset('css/site-header.css');
+  style.href = asset('css/site-header.css?v=20261116-universal-header');
   document.head.append(style);
   const font = document.createElement('link');
   font.rel = 'stylesheet';
