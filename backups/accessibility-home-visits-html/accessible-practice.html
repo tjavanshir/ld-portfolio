@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An accessible scenario-practice prototype for respectful home visits, with keyboard-operable choices and WCAG 2.2 AA design notes.">
+  <title>Accessible Scenario Practice | Tim Javanshir</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17324d;
+      --muted: #40566b;
+      --navy: #103b55;
+      --teal: #075f59;
+      --paper: #f4f8f7;
+      --line: #cbd8d8;
+      --focus: #082f49;
+      --good: #155c36;
+      --review: #713d0c;
+      --content: 54rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    a { color: var(--teal); text-decoration-thickness: .1em; text-underline-offset: .18em; }
+    a:hover { text-decoration-thickness: .16em; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .skip-link { position: absolute; z-index: 2; inset: .5rem auto auto .5rem; padding: .7rem 1rem; background: #fff; color: var(--ink); transform: translateY(-160%); }
+    .skip-link:focus { transform: none; }
+    .shell { width: min(var(--content), calc(100% - 2rem)); margin-inline: auto; }
+    .topbar { background: #fff; border-bottom: 1px solid var(--line); }
+    .topbar-inner { min-height: 4rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem; padding-block: .55rem; }
+    .brand { color: var(--navy); font-weight: 750; text-decoration: none; }
+    .eyebrow { margin: 0; color: var(--teal); font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .hero { padding: clamp(2.5rem, 7vw, 5rem) 0; background: #103b55; color: #fff; }
+    .hero .eyebrow { color: #d6f0e9; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { max-width: 16ch; margin: .7rem 0 1rem; font-size: clamp(2.2rem, 7vw, 3.8rem); letter-spacing: -.035em; }
+    h2 { margin: .45rem 0 1rem; font-size: clamp(1.55rem, 4vw, 2rem); }
+    h3 { margin: 0 0 .5rem; font-size: 1.12rem; }
+    p { max-width: 72ch; }
+    .hero p { color: #edf6f5; font-size: 1.08rem; }
+    .pills { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.4rem; }
+    .pill { border: 1px solid #b4d6d1; border-radius: 999px; padding: .3rem .75rem; color: #fff; font-size: .9rem; }
+    main { padding-block: 2rem 4rem; }
+    section { margin-block: 2.8rem; }
+    .intro, .scenario, .evidence-card, .notice { background: #fff; border: 1px solid var(--line); border-radius: .85rem; }
+    .intro { padding: clamp(1.1rem, 4vw, 1.7rem); }
+    .intro ul { padding-left: 1.25rem; }
+    .scenario { margin-top: 1.25rem; padding: clamp(1rem, 4vw, 1.5rem); }
+    .scenario-number { color: var(--teal); font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    fieldset { min-width: 0; margin: 1rem 0 0; padding: 0; border: 0; }
+    legend { width: 100%; margin-bottom: .7rem; font-weight: 750; }
+    .choice-list { display: grid; gap: .6rem; }
+    .choice { display: flex; align-items: flex-start; gap: .75rem; min-height: 3rem; padding: .72rem .85rem; border: 1px solid #aebfc2; border-radius: .55rem; background: #fff; cursor: pointer; }
+    .choice:hover { background: #f0f7f5; }
+    .choice input { flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin: .12rem 0 0; accent-color: var(--teal); }
+    .button { min-height: 3rem; margin-top: .9rem; padding: .7rem 1.1rem; border: 2px solid var(--navy); border-radius: .5rem; background: var(--navy); color: #fff; font: inherit; font-weight: 750; cursor: pointer; }
+    .button:hover { background: #092c42; }
+    .feedback { min-height: 1.75rem; margin: .7rem 0 0; font-weight: 700; }
+    .feedback.good { color: var(--good); }
+    .feedback.review { color: var(--review); }
+    .score { margin: 1rem 0; padding: .85rem 1rem; border-left: .3rem solid var(--teal); background: #eaf4f2; font-weight: 750; }
+    .notice { padding: 1rem 1.2rem; border-left: .35rem solid #b66a12; }
+    .notice strong { display: block; margin-bottom: .25rem; }
+    .evidence-list { display: grid; gap: .8rem; margin-top: 1.1rem; }
+    .evidence-card { padding: 1rem 1.15rem; }
+    .criterion { display: inline-block; margin-bottom: .35rem; color: var(--teal); font-size: .83rem; font-weight: 800; }
+    .evidence-card p { margin: .2rem 0; }
+    .status { color: var(--muted); font-size: .93rem; }
+    .footer { padding-block: 1.5rem; border-top: 1px solid var(--line); background: #fff; }
+    @media (forced-colors: active) {
+      .choice { border-color: CanvasText; background: Canvas; color: CanvasText; }
+      .button { border-color: ButtonText; background: ButtonFace; color: ButtonText; }
+      .score, .notice { border: 1px solid CanvasText; background: Canvas; color: CanvasText; }
+      :focus-visible { outline-color: Highlight; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to scenario practice</a>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="../../index.html">← Tim Javanshir · Work samples</a>
+      <a href="index.html">Home visit case study</a>
+    </div>
+  </header>
+
+  <section class="hero" aria-labelledby="page-title">
+    <div class="shell">
+      <p class="eyebrow">Accessible learning design · Scenario prototype</p>
+      <h1 id="page-title">Respectful Home Visits</h1>
+      <p>Practise a few decisions that help keep home visits respectful, consent-aware and within role. This sample uses standard controls that work with a keyboard, touch or pointer; it does not rely on dragging.</p>
+      <div class="pills" aria-label="Sample features">
+        <span class="pill">Keyboard-operable choices</span>
+        <span class="pill">Immediate explanatory feedback</span>
+        <span class="pill">WCAG 2.2 AA design target</span>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" class="shell">
+    <section class="intro" aria-labelledby="instructions-title">
+      <p class="eyebrow">Before you begin</p>
+      <h2 id="instructions-title">How to use this practice</h2>
+      <p>Choose one response for each situation, then select <strong>Check response</strong>. Feedback explains the reasoning. You can change an answer and check it again.</p>
+      <ul>
+        <li>Use <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> to move through the page.</li>
+        <li>Within a set of radio options, use the arrow keys to change your selection.</li>
+        <li>No response is timed, and your answers are not saved or sent anywhere.</li>
+      </ul>
+      <p class="score" id="score" role="status" aria-live="polite">0 of 3 decisions checked.</p>
+    </section>
+
+    <section aria-labelledby="practice-title">
+      <p class="eyebrow">Decision practice</p>
+      <h2 id="practice-title">What would you do?</h2>
+
+      <article class="scenario">
+        <p class="scenario-number">Situation 1 · Permission</p>
+        <h3 id="scenario-one-title">At the door</h3>
+        <p>A resident seems unsure about the visit and says they do not want photographs taken today. What is the best next step?</p>
+        <form data-question="one" data-answer="ask">
+          <fieldset>
+            <legend>Choose one response</legend>
+            <div class="choice-list">
+              <label class="choice"><input type="radio" name="q-one" value="ask" required><span>Acknowledge the request, confirm that no photos will be taken, and ask how they would like to continue.</span></label>
+              <label class="choice"><input type="radio" name="q-one" value="routine"><span>Explain that photographs are routine and take them quickly to avoid delaying the visit.</span></label>
+              <label class="choice"><input type="radio" name="q-one" value="family"><span>Ask the family member present to decide whether the photographs can go ahead.</span></label>
+            </div>
+          </fieldset>
+          <button class="button" type="submit">Check response</button>
+          <p class="feedback" id="feedback-one" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </article>
+
+      <article class="scenario">
+        <p class="scenario-number">Situation 2 · Role boundaries</p>
+        <h3 id="scenario-two-title">A possible trip hazard</h3>
+        <p>You notice a loose mat near a narrow hallway. The resident says they use it to keep the floor comfortable. What is the most appropriate response?</p>
+        <form data-question="two" data-answer="describe">
+          <fieldset>
+            <legend>Choose one response</legend>
+            <div class="choice-list">
+              <label class="choice"><input type="radio" name="q-two" value="remove" required><span>Move the mat out of the way and tell the resident it is safer without it.</span></label>
+              <label class="choice"><input type="radio" name="q-two" value="describe"><span>Ask permission to note the concern, describe what you observed without diagnosing, and refer it through the agreed process.</span></label>
+              <label class="choice"><input type="radio" name="q-two" value="ignore"><span>Leave it out of the handover because the resident has chosen to keep it.</span></label>
+            </div>
+          </fieldset>
+          <button class="button" type="submit">Check response</button>
+          <p class="feedback" id="feedback-two" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </article>
+
+      <article class="scenario">
+        <p class="scenario-number">Situation 3 · Clear handover</p>
+        <h3 id="scenario-three-title">Closing the visit</h3>
+        <p>Which note is the clearest handover for the next team member?</p>
+        <form data-question="three" data-answer="factual">
+          <fieldset>
+            <legend>Choose one response</legend>
+            <div class="choice-list">
+              <label class="choice"><input type="radio" name="q-three" value="opinion" required><span>“The resident is difficult and the home is unsafe. Someone should fix it.”</span></label>
+              <label class="choice"><input type="radio" name="q-three" value="factual"><span>“The resident asked that no photos be taken. I observed a loose mat beside the hallway; with permission, I recorded it for the occupational therapist to review.”</span></label>
+              <label class="choice"><input type="radio" name="q-three" value="vague"><span>“Visit completed. Some concerns. Follow up if needed.”</span></label>
+            </div>
+          </fieldset>
+          <button class="button" type="submit">Check response</button>
+          <p class="feedback" id="feedback-three" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </article>
+    </section>
+
+    <section aria-labelledby="design-evidence-title">
+      <p class="eyebrow">Design notes</p>
+      <h2 id="design-evidence-title">Accessibility decisions in this sample</h2>
+      <p class="status">This prototype is designed against selected WCAG 2.2 AA criteria. The notes below describe what is implemented and what still needs manual verification; they are not a claim that the whole page conforms.</p>
+      <div class="evidence-list">
+        <article class="evidence-card">
+          <span class="criterion">2.1.1 Keyboard · 2.4.7 Focus Visible</span>
+          <h3>Use native controls and a visible focus style</h3>
+          <p>Each decision uses a labelled radio group and a submit button. A strong outline appears as keyboard focus moves through the page.</p>
+          <p class="status"><strong>Verify:</strong> complete every decision using keyboard alone and confirm focus remains visible.</p>
+        </article>
+        <article class="evidence-card">
+          <span class="criterion">2.4.11 Focus Not Obscured · 2.5.8 Target Size (Minimum)</span>
+          <h3>Keep controls visible and comfortably sized</h3>
+          <p>The page has no sticky overlays, and answer rows and buttons have generous hit areas.</p>
+          <p class="status"><strong>Verify:</strong> check focus at narrow widths and measure target size/spacing against the criterion.</p>
+        </article>
+        <article class="evidence-card">
+          <span class="criterion">1.4.3 Contrast (Minimum) · 1.4.10 Reflow</span>
+          <h3>Keep text readable as the viewport changes</h3>
+          <p>The sample uses a single-column layout that can narrow with the viewport and browser zoom. Text and controls do not depend on colour alone.</p>
+          <p class="status"><strong>Verify:</strong> measure text and control contrast, then review at 320 CSS pixels and 200% zoom.</p>
+        </article>
+        <article class="evidence-card">
+          <span class="criterion">1.3.1 Info and Relationships · 3.3.2 Labels or Instructions</span>
+          <h3>Make structure and instructions available to assistive technology</h3>
+          <p>Headings organise the page; each question uses a fieldset, legend and explicitly labelled native options. Instructions explain how to use the interaction.</p>
+          <p class="status"><strong>Verify:</strong> review the accessibility tree and listen through the page with a screen reader.</p>
+        </article>
+        <article class="evidence-card">
+          <span class="criterion">2.5.7 Dragging Movements · 4.1.3 Status Messages</span>
+          <h3>Offer a simple response path and useful feedback</h3>
+          <p>The scenario does not require dragging. Feedback is written in text, identifies the reasoning, and is announced through a status message.</p>
+          <p class="status"><strong>Verify:</strong> test that each feedback message is announced with a screen reader. Dragging Movements is not applicable to this interaction because no dragging is required.</p>
+        </article>
+      </div>
+      <aside class="notice" aria-label="Conformance scope">
+        <strong>Conformance scope</strong>
+        WCAG conformance applies to complete pages and all applicable Level A and AA criteria, not to a feature label or authoring tool. Before making a conformance claim, check contrast, reflow, keyboard operation, screen-reader output, all feedback states, and any hosted or embedded content.
+      </aside>
+      <p>Reference: <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">W3C WCAG 2.2 Quick Reference</a>.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell"><a href="index.html">← Back to Respectful Home Visits</a> · <a href="../../index.html">All work samples</a></div>
+  </footer>
+  <script>
+    (() => {
+      const feedback = {
+        one: {
+          correct: 'Best response. Respect the resident’s decision, clarify what they are comfortable with, and continue only with their agreement.',
+          review: 'Revisit this choice. A resident’s consent is specific and can be withheld or changed. Do not transfer that decision to a family member.'
+        },
+        two: {
+          correct: 'Best response. Record observable facts with permission and refer technical or safety decisions through the agreed role and workplace process.',
+          review: 'Revisit this choice. Avoid changing the resident’s space or making a technical judgement outside your role. Ask, describe, and refer appropriately.'
+        },
+        three: {
+          correct: 'Best response. This note separates the resident’s request from your observation and identifies a clear follow-up role.',
+          review: 'Revisit this choice. A useful handover is factual, specific, respectful, and clear about what was agreed and who should follow up.'
+        }
+      };
+      const checked = new Map();
+      const score = document.getElementById('score');
+      document.querySelectorAll('form[data-question]').forEach((form) => {
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const { question, answer } = form.dataset;
+          const selected = form.querySelector('input[type="radio"]:checked');
+          if (!selected) return;
+          const correct = selected.value === answer;
+          checked.set(question, correct);
+          const output = document.getElementById(`feedback-${question}`);
+          output.textContent = correct ? feedback[question].correct : feedback[question].review;
+          output.className = `feedback ${correct ? 'good' : 'review'}`;
+          const total = Array.from(checked.values()).filter(Boolean).length;
+          score.textContent = `${checked.size} of 3 decisions checked; ${total} best responses${checked.size === 3 ? '. Practice complete.' : '.'}`;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
